@@ -3,22 +3,29 @@ const bodyParser   = require('body-parser');
 const mongoose     = require('mongoose');
 const session      = require('express-session');
 const passport     = require('passport');
-var   MongoStore   = require('connect-mongo')(session);
+//var   MongoStore   = require('connect-mongo')(session);
 const app          = express();
 const port         = process.env.PORT || 3000;
+//routes
+const developer    = require('./routes/developer');
+const member       = require('./routes/member');
 
-app.use(express.static("public"));
+const path         = require("path");
+require('dotenv').config()
+
+app.use(express.static(path.join(__dirname,"public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
 }));
 
 //connect to database                        
-//mongoose.connect('mongodb://localhost:27017/nameDB',{useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true});
+mongoose.connect(process.env.DATABASE_LINK,{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
-//session & security
+//to be removed
+/*session & security 
 app.use(session({
-    secret: 'someSecretHere',
+    secret: process.env.SECRETS,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({mongooseConnection: mongoose.connection}),
@@ -32,11 +39,20 @@ res.locals.session = req.session;
 next();    
 });
 
-/* //use with userSchema when user is defined
+//use with userSchema when user is defined
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 */
+
+// API routers
+app.use("/api/developers",developer);
+app.use("/api/member",member);
+
+//root route
+app.get("/",function(req,res){
+//res.sendFile()
+});
 
 app.listen(port, () =>{
     console.log(`Server started on port: ${port}`)
