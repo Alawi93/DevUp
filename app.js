@@ -40,6 +40,4 @@ passport.deserializeUser(User.deserializeUser());
 
 app.listen(port, () =>{
     console.log(`Server started on port: ${port}`)
-    console.log("testing bransches etc")
-    // Some coment from sepastian
 });
