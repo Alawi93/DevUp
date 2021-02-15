@@ -8,6 +8,9 @@ const member       = require('./routes/member');
 const path         = require("path");
 require('dotenv').config()
 
+//connect to database                        
+mongoose.connect(process.env.DATABASE_LINK,{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+
 app.use(express.static(path.join(__dirname,"public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -15,9 +18,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use("/api/developers",developer);
 app.use("/api/member",member);
-
-//connect to database                        
-mongoose.connect(process.env.DATABASE_LINK,{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
 //root route
 app.get("/",function(req,res){
