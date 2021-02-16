@@ -6,8 +6,10 @@ const port         = process.env.PORT || 3000;
 const developer    = require('./routes/developer');
 const member       = require('./routes/member');
 const path         = require("path");
-require('dotenv').config();
-const middleware   = require('./middleware/middleware');
+
+const midWare  = require('./middleware/checkSkillsDB')     
+require('dotenv').config()
+
 
 //connect to database                        
 mongoose.connect(process.env.DATABASE_LINK,{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
@@ -25,6 +27,9 @@ app.get("/",function(req,res){
 //res.sendFile()
 });
 
+
+midWare.checkSkillSets();
 app.listen(port, ()=>{
+
     console.log(`Server started on port: ${port}`)
 });
