@@ -6,7 +6,7 @@ const port         = process.env.PORT || 3000;
 const developer    = require('./routes/developer');
 const member       = require('./routes/member');
 const path         = require("path");
-
+const middleware   = require('./middleware/middleware');
 const midWare  = require('./middleware/checkSkillsDB')     
 require('dotenv').config()
 
