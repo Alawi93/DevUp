@@ -10,6 +10,7 @@ const path         = require("path");
 const midWare  = require('./middleware/checkSkillsDB')     
 require('dotenv').config()
 
+
 //connect to database                        
 mongoose.connect(process.env.DATABASE_LINK,{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
@@ -20,15 +21,15 @@ app.use(bodyParser.urlencoded({
 }));
 app.use("/api/developers",developer);
 app.use("/api/member",member);
-
+app.use(middleware.incomingRequest);
 //root route
 app.get("/",function(req,res){
 //res.sendFile()
 });
 
+
 midWare.checkSkillSets();
+app.listen(port, ()=>{
 
-
-app.listen(port, () =>{
     console.log(`Server started on port: ${port}`)
 });
