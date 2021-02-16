@@ -1,27 +1,33 @@
-const Utils        = require("./models/utils")
+const Utils = require("../models/utils")
 
-Utils.find({},function(err,data){
-    if(err){
-        console.log(err)
-    }
-    console.log(data)
-})
+function checkSkillSets() {
+    Utils.find({}, function (err, data) {
+        if (err) {
+            console.error(err)
 
+        } else {
+            if (data.length == 0) {
+                console.log("No skillset records, creates it in DB")
+                let test = new Utils({
+                    skillsets: [
+                        'Java',
+                        'HTML',
+                        'CSS',
+                        'JavaScript',
+                        'C++',
+                        'C',
+                        'C#',
+                        'Python',
+                        'MySql',
+                        'MongoDB'
+                    ]
+                });
+                test.save()
+            } else {
+                console.log("skillset exist, Accepts")
+            }
+        }
+    })
+}
 
-/*
-const test = new Utils({
-    skillsets: [
-        'Java',
-        'HTML',
-        'JavaScript',
-        'C++',
-        'C',
-        'C#',
-        'MySql',
-        'MongoDB'
-    ]
-})
-
-console.log(test);
-test.save()
-*/
+module.exports.checkSkillSets = checkSkillSets;

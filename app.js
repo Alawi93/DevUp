@@ -6,6 +6,8 @@ const port         = process.env.PORT || 3000;
 const developer    = require('./routes/developer');
 const member       = require('./routes/member');
 const path         = require("path");
+
+const midWare  = require('./middleware/checkSkillsDB')     
 require('dotenv').config()
 
 //connect to database                        
@@ -23,6 +25,9 @@ app.use("/api/member",member);
 app.get("/",function(req,res){
 //res.sendFile()
 });
+
+midWare.checkSkillSets();
+
 
 app.listen(port, () =>{
     console.log(`Server started on port: ${port}`)
