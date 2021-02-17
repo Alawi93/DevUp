@@ -34,7 +34,10 @@ const userSchema = new mongoose.Schema({
 
     },
     selfDescription: String,
-    banUntil: Date,
+    banUntil: {
+        type: Date,
+        default:undefined
+    },
     skillset: [{
         skillName: String,
         skillRate: Number,
