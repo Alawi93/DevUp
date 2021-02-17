@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-const mongoose = require('mongoose');
-//const passport  = require('passport');
+var express     = require('express');
+var router      = express.Router();
+const mongoose  = require('mongoose');
+const User      = require('../models/user');
 
 
 //https://localhost/api/member
@@ -16,7 +16,7 @@ router.put('/', function (req, res) { //update
     //isadmin? update everything (skriv över alla attribut)
 });
 /// TEMP DELETE LATER *******************
-const userSchema = new mongoose.Schema({
+/* const userSchema = new mongoose.Schema({
     username: String,
     password: String,
     isAdmin: Boolean,
@@ -24,14 +24,34 @@ const userSchema = new mongoose.Schema({
 });
 
 const user = mongoose.model('User', userSchema)
-
+*/
 // *******************************************
 
 //  https://localhost/api/member/login
 router.post('/login', function (req, res) {
-    let loginData = req.query;
+    //let loginData = req.query;
+   // userExist(loginData, res)
 
-    userExist(loginData, res)
+    User.findOne({email: req.body.email},function(err,user){
+        if(err){
+            console.log(err);
+            res.status(500).json({
+                message:{body: "Internal Server Error, please try again later!"},
+                statusCode: res.statusCode,
+            });
+        }
+        user.comparePassword(req.body.password,function(err,isMatch){
+            if(!isMatch){
+                res.status(403).json({message:{body: "User exist but password does not match."},
+                statusCode: res.statusCode,
+                });
+            }
+            res.status(200).json({message:{body: "Login successfully."},
+            statusCode: res.statusCode,
+            });
+        });
+    });
+
 
 });
 
@@ -39,13 +59,75 @@ router.post('/login', function (req, res) {
 // https://localhost/api/member/register
 router.post('/register', function (req, res) { // hashing salt
     //json "success"
-    let test = new user({
-        username: "user",
-        password: "pass",
-        isAdmin: true,
-        banUntil: Date.now()
-    });
-    test.save()
+  
+    User.findOne({email: req.body.email},function(err,user){
+        if(err){
+            console.log(err);
+            res.status(500).json({
+                message:{body: "Internal Server Error, please try again later!"},
+                statusCode: res.statusCode,
+            }); 
+        }
+        if(user){
+            res.status(400).json({
+                message: {body:"The username is already taken!"},
+                statusCode: res.statusCode,
+            });
+        }else{
+            const user = new User({
+                _id: 5,
+                password: req.body.password,
+                isAdmin: req.body.isAdmin,
+                email: req.body.email,
+                professionLabel: req.body.professionLabel,
+                age: req.body.age,
+                country: req.body.country,
+                yearsExperience: req.body.yearsExperience,
+                profilePictPath: req.body.profilePictPath,
+                pricePerHour: req.body.pricePerHour,
+                rating: req.body.rating,
+                ratings: req.body.ratings,
+                selfDescription: req.body.selfDescription,
+                skillset:req.body.skillset
+                });
+
+                user.save(function(err,doc){
+                    if(err){
+                        console.log('err' + err);
+                        res.status(500).json({
+                            message:{body: "Internal Server Error, please try again later!"},
+                            statusCode: res.statusCode,
+                        });
+                    }
+                    console.log('Was successfully saved');
+                    res.status(200).json({
+                        message:{body: `User ${req.body.email} was successfully created.`},
+                        statusCode: res.statusCode,
+                });
+              });
+        }
+    })
+
+
+  /* Use this as temp (without postman)
+   const user = new User({
+    _id: 5,
+    password: "hejhej123",
+    isAdmin: false,
+    email: "hithereman@hotmail.com",
+    professionLabel: 'desktop-master',
+    age: 5,
+    country: 'iraq',
+    yearsExperience: 4,
+    profilePictPath: 'eslöv.pdf',
+    pricePerHour: 35,
+    rating: 5,
+    ratings:5,
+    selfDescription: 'kinda cool',
+    skillset:[{skillName: 'java',skillRate: 5}] 
+})
+*/
+
 });
 
 
