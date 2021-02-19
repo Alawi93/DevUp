@@ -1,0 +1,326 @@
+/* CSS proberties (~variables) */
+:root {
+    /* THEMES */
+    --theme-main: #747fe2;
+    --theme-main-hover: #77abdb;
+    --theme-main-active: #354757;
+
+    /* BACKGROUNDS */ 
+    --white: white;
+    --light: #e7e6e7;
+    --dark: #3d4557;
+    --dark-light: #5a5d63;
+
+    /* SCROLLBARS */ 
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: #7a7a7a;
+    --scrollbar-thumb-hover: #a5a5a5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light);
+    overflow-y: hidden; /*Instead: Scrollbars in individual divs*/
+}
+
+#main-wrapper {
+    min-height: -webkit-fill-available; /*Fix for: URL bar dispears upon scroll in mobile -> Height alters */
+}
+
+.shadow {
+    box-shadow: 0 4px 8px 0 #00000033, 0 6px 20px 0 #00000030;
+}
+
+/*_____________________ HEADER ______________________*/
+
+#header {
+    height: 65px;
+    padding: 0 20px 0 20px;
+
+    display:flex; /*Flexbox parent*/
+    align-items: center; /*Cross-section*/ 
+    flex-wrap:nowrap;
+
+    background-color: var(--white);
+
+    z-index: 1; /*Display shadow above lower z-index elements*/
+    position: relative;
+}
+
+#hamburger {
+    height:26px;
+    fill: var(--dark-light);
+    cursor: pointer;
+}
+
+#hamburger:hover {
+    fill: var(--theme-main);  
+}
+
+#hamburger:active {
+    fill: var(--theme-main-active);
+}
+
+#img-logo {
+    height:35px;
+    padding-left: 10px;
+
+    user-select: none; /* Avoid turning it blue*/
+}
+
+#header-child-2 {
+    flex-grow: 1;
+    padding-left: 20px;
+}
+
+#header-child-3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#header-child-3 * {
+    margin-left: 20px;
+}
+#header-child-3 a {
+    color: var(--theme-main);
+}
+
+#header-child-3 #img-profile {
+    cursor: pointer;
+    height: 50px;
+    border-radius: 50%; /* Make round*/
+    box-sizing: border-box; /* Inline border*/
+}
+
+#header-child-3 #img-profile:hover {
+    border: 2px solid var(--theme-main);
+}
+
+/*_________________ CONTENT-WRAPPER __________________*/
+/* = Below header. Includes sidebar and content containers*/
+
+#content-wrapper {    
+    position:absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top:65px; /*Below header*/ 
+}
+
+/*____________________ SIDEBAR _______________________*/
+
+#sidebar {
+    width: 300px;
+    z-index: 1; /*Bring to front*/
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: -300px; /*Hide as default*/
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--dark);
+
+    transition-duration: 0.6s;
+}
+
+#sidebar:hover {
+    overflow-y: auto; /* Show scrollbar if needed*/
+    overflow: overlay; /* Place scrollbar on top of content*/
+}
+
+#sidebar #close {
+    margin-left: auto;
+    margin-bottom:-20px;
+    z-index: 1;
+}
+
+.filler {
+    flex-grow: 1; /* Push following element down*/
+}
+
+/* Default: Collapse dropdownable content */ 
+#sidebar .dropdownable { 
+    max-height: 0;
+    overflow: hidden;
+}
+
+/* Expand dropdownable content if class dropdown is added to parent div */
+.dropdown .dropdownable{ 
+    max-height:700px !important;
+
+    transition-property: max-height;
+	transition-duration: 2s;
+}
+
+.btn-sidebar {
+    transition-property: padding-left;
+    transition-duration: 0.6s;
+}
+
+.btn-sidebar .arrow {
+    margin-right: 10px;
+    transition-property: transform;
+	transition-duration: 0.6s;
+}
+
+/* Alter drop down button when content is dropped down */
+.dropdown .btn-sidebar {
+    color:white;
+    padding-left: 30px;
+}
+
+/* Alter drop down arrow when content is dropped down */
+.dropdown .btn-sidebar .arrow {
+    transform: rotateZ(90deg);
+}
+
+/* Content of drop down*/
+#sidebar .dropdown-inner {
+    margin: 8px;
+    border-radius: 5px;
+    padding: 12px;
+    background-color: var(--dark-light);
+    color: white;
+}
+
+/* Sidebar display: Move sidebar in from left */
+#main-wrapper.menu-displayed  #sidebar {
+    left: 0;
+}
+
+#main-wrapper.big-screen  #sidebar {
+    overflow-y: hidden; /* Hide until hover*/
+}
+
+#main-wrapper.big-screen  #sidebar:hover {
+    overflow-y: auto; /* Show scrollbar if needed*/
+    overflow: overlay; /* Place scrollbar on top of content*/
+}
+
+/*_____________________ CONTENT ______________________*/
+
+#content {
+    position:absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 20px;
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    transition-property: padding;
+    transition-duration: 0.6s;
+}
+
+/* Sidebar display: Big screen */
+#main-wrapper.big-screen.menu-displayed  #content {
+    padding-left: 300px;
+}
+
+/*EXAMPLE CARD*/
+.card-test {
+    width: 400px;
+    height: 200px;
+    margin: 20px;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.card-test .card-header {
+    width: -webkit-fill-available;
+
+    border-radius: 12px 12px 0 0;
+    
+    padding: 12px;
+    /* background-color: var(--theme-main); */
+    background-color:var(--theme-main); 
+    color: white;
+}
+
+.card-test p {
+    padding: 20px;
+}
+
+/*____________________ SCROLL BAR _______________________*/
+
+::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+      margin-bottom: 4px;
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb); 
+      border-radius: 3px;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-thumb-hover);
+    }
+
+/*______________________ BUTTONS ________________________*/
+
+button {
+    border: none;
+    outline: none; /*Avoid border appearing when clicked*/
+    color: #ffffff;
+    
+    padding: 10px 15px; 
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block; /* allow alignemt beside */
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-floating {
+    background-color: var(--theme-main);
+    font-weight: bold;
+}
+
+.btn-floating:hover {
+    background-color: var(--theme-main-hover);;
+}
+
+.btn-floating:active {
+    background-color: var(--theme-main-active);;
+}
+
+.btn-sidebar {
+    width: 100%;
+    border-radius: 0;
+    margin: 0;
+    text-align: start;
+    color: #b9b8b8;
+    padding-left: 20px;
+    background-color: transparent;
+}
+
+.btn-sidebar:hover {
+    color: #dfdfdf;  
+}
