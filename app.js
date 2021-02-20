@@ -6,8 +6,7 @@ const port         = process.env.PORT || 3000;
 const developer    = require('./routes/developer');
 const member       = require('./routes/member');
 const path         = require("path");
-const middleware   = require('./middleware/middleware');
-const midWare  = require('./middleware/checkSkillsDB')     
+const middleware   = require('./middleware/middleware');  
 require('dotenv').config()
 
 
@@ -28,7 +27,8 @@ app.get("/",function(req,res){
 });
 
 
-midWare.checkSkillSets();
+middleware.checkSkillSets();
+middleware.checkCreateDummyUser();
 app.listen(port, ()=>{
 
     console.log(`Server started on port: ${port}`)

@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     pricePerHour: Number,
     rating: Number,
     ratings: Number,
-    memmberSince: {
+    memberSince: {
         type: Date,
         default: Date.now(),
 

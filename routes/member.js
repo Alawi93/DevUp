@@ -75,9 +75,9 @@ router.post('/register', function (req, res) { // hashing salt
             });
         }else{
             const user = new User({
-                _id: 5,
+                _id: 1,
                 password: req.body.password,
-                isAdmin: req.body.isAdmin,
+                isAdmin: false,
                 email: req.body.email,
                 professionLabel: req.body.professionLabel,
                 age: req.body.age,
@@ -87,6 +87,7 @@ router.post('/register', function (req, res) { // hashing salt
                 pricePerHour: req.body.pricePerHour,
                 rating: req.body.rating,
                 ratings: req.body.ratings,
+                memberSince: Date.now(),
                 selfDescription: req.body.selfDescription,
                 skillset:req.body.skillset
                 });
@@ -109,24 +110,6 @@ router.post('/register', function (req, res) { // hashing salt
     })
 
 
-  /* Use this as temp (without postman)
-   const user = new User({
-    _id: 5,
-    password: "hejhej123",
-    isAdmin: false,
-    email: "hithereman@hotmail.com",
-    professionLabel: 'desktop-master',
-    age: 5,
-    country: 'iraq',
-    yearsExperience: 4,
-    profilePictPath: 'eslöv.pdf',
-    pricePerHour: 35,
-    rating: 5,
-    ratings:5,
-    selfDescription: 'kinda cool',
-    skillset:[{skillName: 'java',skillRate: 5}] 
-})
-*/
 
 });
 
