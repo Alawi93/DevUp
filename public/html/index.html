@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="../css/style_content.css">
     <title>DevUp</title>
 </head>
+
 <body>
     <div id="main-wrapper">
 
@@ -18,7 +20,7 @@
 
             <div id="header-child-1">
                 <!-- Hamburger svg-->
-                <svg viewBox="0 0 100 80" id="hamburger" onclick="screenConfig.toggleMenu()">
+                <svg viewBox="0 0 100 80" id="hamburger" onclick="sidebar.toggleMenu()">
                     <rect width="90" height="20" rx="4"></rect>
                     <rect y="30" width="100" height="20" rx="4"></rect>
                     <rect y="60" width="80" height="20" rx="4"></rect>
@@ -30,12 +32,28 @@
             </div>
 
             <div id="header-child-3">
-                <a href="#">Register</a>
-                <button id="btn-login" class="btn-floating">Login</button>
+                <a href="javascript:signIn.toggleSignIn('register')" id="link-register">Register</a>
+                <button id="btn-login" onclick="signIn.toggleSignIn('login')" class="btn-floating">Login</button>
+                <button id="btn-end-demo" onclick="clientManager.logout()" class="btn-floating">END DEMO</button>
                 <p id="label-name">NAME</p>
-                <img id="img-profile" src="../images/profile.png" onclick="screenConfig.toggleDropdown('edit-profile')">
+                <img id="img-profile" src="../images/profile.png" onclick="sidebar.toggleDropdown('edit-profile')">
             </div>
+        </div>
 
+        <div id="sign-in" class="shadow">
+
+            <div id="sign-in-header">
+                <p id="sign-in-label"></p>
+                <button id="sign-in-close" onclick="signIn.hideSignIn()" class="btn-floating">X</button>
+            </div>
+            <form autocomplete="off">
+                <input type="text" placeholder="Email" id="input-mail"><br>
+                <input type="password" placeholder="Password" id="input-pwd"><br>
+            </form>
+            <div id="sign-in-footer">
+                <a href="javascript:demoMode.start()" id="link-demo">Demo mode</a> <!-- TEMP -->
+                <button onclick="signIn.submit()" class="btn-floating">Submit</button>
+            </div>
         </div>
 
         <div id="content-wrapper">
@@ -43,11 +61,11 @@
             <div id="sidebar">
 
                 <div id="close">
-                    <button onclick="screenConfig.toggleMenu()" class="btn-floating" style="margin:8px;">X</button>
+                    <button onclick="sidebar.toggleMenu()" class="btn-floating" style="margin:8px;">X</button>
                 </div>
 
                 <div id="edit-profile">
-                    <button onclick="screenConfig.toggleDropdown('edit-profile')" class="btn-sidebar">
+                    <button onclick="sidebar.toggleDropdown('edit-profile')" class="btn-sidebar">
                         <img class="arrow" src="../images/arrow.png">
                         <span>EDIT PROFILE</span>
                     </button>
@@ -61,7 +79,7 @@
                 </div>
 
                 <div id="filter-search">
-                    <button onclick="screenConfig.toggleDropdown('filter-search')" class="btn-sidebar">
+                    <button onclick="sidebar.toggleDropdown('filter-search')" class="btn-sidebar">
                         <img class="arrow" src="../images/arrow.png">
                         <span>FILTER SEARCH</span>
                     </button>
@@ -73,7 +91,7 @@
                 </div>
 
                 <div id="admin-tools">
-                    <button onclick="screenConfig.toggleDropdown('admin-tools')" class="btn-sidebar">
+                    <button onclick="sidebar.toggleDropdown('admin-tools')" class="btn-sidebar">
                         <img class="arrow" src="../images/arrow.png">
                         <span>ADMIN TOOLS</span>
                     </button>
@@ -84,17 +102,48 @@
                     </div>
                 </div>
 
+                <div id="about">
+                    <button onclick="sidebar.toggleDropdown('about')" class="btn-sidebar">
+                        <img class="arrow" src="../images/arrow.png">
+                        <span>ABOUT</span>
+                    </button>
+                    <div class="dropdownable">
+                        <div class="dropdown-inner">
+                            <p>DevUps allows software developers to easily market themselves for job or gig
+                                opportunities.</p><br>
+                            <p>No account or login is required for browsing among developers.</p><br>
+                            <p>If you are looking for a developer for employment or gig purposes, use the filter
+                                function to specialize your search.
+                            <p><br>
+                            <p>If you are a developer, create an account to start edit your profile in simple steps.
+                            <p><br>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="filler"></div>
+
                 <div id="sidebar-footer">
-                    <button id="btn-logout" class="btn-sidebar" style="text-align: center;">Log out</button>
+                    <button id="btn-logout" onclick="clientManager.logout()" class="btn-sidebar"
+                        style="text-align: center;">Log out</button>
                 </div>
 
             </div>
 
             <div id="content">
                 <!-- Injection point for dynamically rendered content-->
+                <div class="card-test shadow">
+                    <p class="card-header">Welcome!</p>
+                    <div class="card-content">
+                        <p>DevUp is a convenient market place for software developers.</p><br>
+                        <p>Browse developers, or create a developer account to get started.</p><br>
+                        <button onclick="refreshContent();" class="btn-floating">Start</button>
+                    </div>
+                </div>
             </div>
+ 
         </div>
+
     </div>
 </body>
 

@@ -3,7 +3,7 @@ Temporary script to load content into the content body of the frame
  */
 
 $(document).ready(function () {
-    refreshContent();      
+    //refreshContent();      
 });
 
 function refreshContent() {
@@ -21,9 +21,13 @@ function refreshContent() {
         header.innerHTML = "Name";
         cardDiv.appendChild(header);
 
+        const content = document.createElement("div");
+        content.className = "card-content";
+        cardDiv.appendChild(content);
+
         const breadText = document.createElement("p");
         breadText.innerHTML = "Hello";
-        cardDiv.appendChild(breadText); 
+        content.appendChild(breadText); 
 
         /*
         Will create this inside <content>:

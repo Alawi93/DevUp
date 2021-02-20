@@ -36,6 +36,10 @@ body {
     box-shadow: 0 4px 8px 0 #00000033, 0 6px 20px 0 #00000030;
 }
 
+.filler {
+    flex-grow: 1; /* Push following elements to end in flex direction*/
+}
+
 /*_____________________ HEADER ______________________*/
 
 #header {
@@ -48,7 +52,7 @@ body {
 
     background-color: var(--white);
 
-    z-index: 1; /*Display shadow above lower z-index elements*/
+    z-index: 2; /*Display shadow above lower z-index elements*/
     position: relative;
 }
 
@@ -87,8 +91,13 @@ body {
 #header-child-3 * {
     margin-left: 20px;
 }
-#header-child-3 a {
-    color: var(--theme-main);
+
+#header-child-3 #btn-end-demo {
+    display: none;
+}
+
+#header-child-3 #label-name {
+    color: grey;
 }
 
 #header-child-3 #img-profile {
@@ -100,6 +109,94 @@ body {
 
 #header-child-3 #img-profile:hover {
     border: 2px solid var(--theme-main);
+}
+
+/*Client profile adaption */
+#main-wrapper.not-logged-in #header-child-3 #label-name,
+#main-wrapper.not-logged-in #header-child-3 #img-profile,
+#main-wrapper.developer #header-child-3 #link-register,
+#main-wrapper.developer #header-child-3 #btn-login,
+#main-wrapper.admin #header-child-3 #link-register,
+#main-wrapper.admin #header-child-3 #btn-login  {
+    display: none;
+}
+
+#main-wrapper.demo-mode #header-child-3 #btn-end-demo {
+    display:inline;
+}
+
+/*_____________________ SIGN IN ______________________*/
+/* Login & Register slide down window */
+
+#sign-in {
+    position: fixed;
+    background-color: white;
+    border-radius: 0 0 12px 12px;
+    width: 250px;
+    height: 165px;
+    top: -140px;
+    padding: 12px;
+    right: 50px;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    transition-property: top;
+    transition-duration: 0.6s;
+}
+
+#sign-in.display {
+    top: 65px;
+}
+
+#sign-in-header {
+    display:flex; 
+    margin-bottom: 8px;
+}
+
+#sign-in-label {
+    align-self: flex-end;
+}
+
+#sign-in-close {
+    margin-left: auto; /*Push to right */   
+}
+
+#sign-in-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 4px;
+}
+
+#sign-in #link-demo {
+    margin-left: 4px;
+}
+
+#sign-in #link-demo.hide {
+    visibility: hidden; /* Still occupy the space */
+}
+
+#sign-in form {
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+#sign-in input {
+    box-sizing: border-box; /* border inside div */
+    width: 100%;
+    
+    font-size: 15px;
+    border-radius: 5px;
+    outline: none; /* Disable auto-border*/
+    border:2px solid var(--theme-main-hover);
+    padding: 6px 0 6px 6px;
+    margin-bottom: 8px;  
+}
+
+#sign-in input:focus {
+    box-shadow: 0 0 8px var(--theme-main-hover);
 }
 
 /*_________________ CONTENT-WRAPPER __________________*/
@@ -143,10 +240,6 @@ body {
     margin-left: auto;
     margin-bottom:-20px;
     z-index: 1;
-}
-
-.filler {
-    flex-grow: 1; /* Push following element down*/
 }
 
 /* Default: Collapse dropdownable content */ 
@@ -208,6 +301,15 @@ body {
     overflow: overlay; /* Place scrollbar on top of content*/
 }
 
+/*Client profile adaption */
+#main-wrapper.not-logged-in #sidebar #edit-profile,
+#main-wrapper.not-logged-in #sidebar #admin-tools,
+#main-wrapper.not-logged-in #sidebar #btn-logout,
+#main-wrapper.developer #sidebar #admin-tools,
+#main-wrapper.admin #sidebar #edit-profile {
+    display: none;
+}
+
 /*_____________________ CONTENT ______________________*/
 
 #content {
@@ -225,6 +327,8 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    align-items: baseline;
+    
 
     transition-property: padding;
     transition-duration: 0.6s;
@@ -238,7 +342,7 @@ body {
 /*EXAMPLE CARD*/
 .card-test {
     width: 400px;
-    height: 200px;
+    min-height: 200px;
     margin: 20px;
     background-color: white;
     border-radius: 12px;
@@ -255,7 +359,7 @@ body {
     color: white;
 }
 
-.card-test p {
+.card-test .card-content {
     padding: 20px;
 }
 
@@ -323,4 +427,30 @@ button {
 
 .btn-sidebar:hover {
     color: #dfdfdf;  
+}
+
+a {
+    color: var(--theme-main); 
+}
+
+a:hover {
+    color: var(--theme-main-hover);
+}
+
+/*_________________ RESPONSIVE HEADER _____________________*/
+/* All other responsiveness is handled in 'script.js' */
+
+@media only screen and (max-width: 600px) {
+    #header-child-3 #label-name {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    #header-child-2 #img-logo {
+        display: none;
+    }
+    #sign-in {
+        right: 20px;
+    }
 }
