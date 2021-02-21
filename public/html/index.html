@@ -16,6 +16,8 @@
 <body>
     <div id="main-wrapper">
 
+        <!-------------------------- HEADER ---------------------------->
+
         <div id="header" class="shadow">
 
             <div id="header-child-1">
@@ -57,6 +59,8 @@
         </div>
 
         <div id="content-wrapper">
+
+            <!----------------------- SIDEBAR ---------------------------->
 
             <div id="sidebar">
 
@@ -130,7 +134,11 @@
 
             </div>
 
+            <!--------------------- MAIN CONTENT------------------------>
+
             <div id="content">
+
+                
                 <!-- Injection point for dynamically rendered content-->
                 <div class="card-test shadow">
                     <p class="card-header">Welcome!</p>
@@ -144,6 +152,17 @@
  
         </div>
 
+        <!------------------------- POPUP ---------------------------->
+
+        <div id="popup-container">
+            <div id="popup" class="shadow">
+                <!-- https://www.w3schools.com/howto/howto_css_modals.asp -->
+                <p id="popup-header"></p>
+                <div id = popup-msg></div>
+                <button id="popup-discard" onclick="popup.discard()" class="btn-floating">OK</button>
+            </div>
+        </div>
+        
     </div>
 </body>
 

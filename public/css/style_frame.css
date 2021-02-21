@@ -52,7 +52,7 @@ body {
 
     background-color: var(--white);
 
-    z-index: 2; /*Display shadow above lower z-index elements*/
+    z-index: 3; /*Display shadow above lower z-index elements*/
     position: relative;
 }
 
@@ -137,7 +137,7 @@ body {
     top: -140px;
     padding: 12px;
     right: 50px;
-    z-index: 1;
+    z-index: 2;
 
     display: flex;
     flex-direction: column;
@@ -363,6 +363,63 @@ body {
     padding: 20px;
 }
 
+/*______________________ POP-UP ________________________*/
+
+#popup-container {
+    /* Place above all other content*/
+    display: none; /* Hidden by default */
+    position: absolute;
+    
+    height: 100%;
+    top:0;
+    left: 0;
+    right:0;
+    z-index: 5; 
+
+    border: 3px solid green;
+}
+
+#popup-container.display {
+    display: flex;
+    justify-content: center;
+}
+
+#main-wrapper.big-screen.menu-displayed #popup-container {
+    padding-left:300px;
+}
+
+#popup {
+    /* display: none; /* Hidden by default */
+    position: absolute;
+    display: table;
+    margin: 0 auto;
+    margin-top: 125px; 
+    border-radius: 12px;
+    overflow: auto;
+    min-width: 400px;
+    max-width: 500px;
+    background-color: white; 
+ }
+
+ #popup-header {
+    width: -webkit-fill-available;
+    border-radius: 12px 12px 0 0; 
+    padding: 12px;
+    background-color:var(--theme-main); 
+    color: white;
+}
+
+#popup-msg {
+    padding:  12px 12px 0 12px;
+}
+
+#popup-discard {
+    float: right;
+    text-align: center;
+    width: 90px;
+    margin: 12px;
+    margin-top: -15px;
+}
 /*____________________ SCROLL BAR _______________________*/
 
 ::-webkit-scrollbar {
@@ -443,6 +500,10 @@ a:hover {
 @media only screen and (max-width: 600px) {
     #header-child-3 #label-name {
         display: none;
+    }
+    #popup {
+        min-width: 70%;
+        max-width: 85%;
     }
 }
 
