@@ -113,6 +113,28 @@ const clientManager = {
     }
 };
 
+const popup = {
+    display: function(header, msgLines) {
+        // Example call: popup.display("Hello", ["Line 1", "Line 2"])
+        $("#popup-header").text(header);
+        const popupMsg = document.getElementById("popup-msg");
+        popupMsg.innerHTML = "";
+        for(const line of msgLines) {
+            popupMsg.insertAdjacentHTML("beforeend",
+            `<p>${line}</p><br>`);
+        };
+
+       // $("#popup-msg").text(msg);
+        $("#popup-container").addClass("display");
+        $("#content-wrapper").fadeTo("slow", 0.3); // Fade background
+    },
+    discard: function() {
+        $("#popup-container").removeClass("display");
+        $("#content-wrapper").fadeTo("slow", 1); // Unfade background
+
+    }
+}
+
 const demoMode = {
     isOn: false,
     demoClient: 
@@ -128,10 +150,14 @@ const demoMode = {
         this.isOn = true;
         signIn.hideSignIn();
         refreshContent();
+        popup.display("Demo mode started", 
+        ["Explore the view when logged in as a software developer.",
+        "API access is limited in demo mode."]);
     },
     end: function() {
         this.isOn = false;
         $("#main-wrapper").removeClass("demo-mode");
+        popup.display("Demo mode ended", ["Hope you liked it."]);
 
     }
 }
