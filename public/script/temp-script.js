@@ -26,7 +26,7 @@ function refreshContent() {
         cardDiv.appendChild(content);
 
         const breadText = document.createElement("p");
-        breadText.innerHTML = "Hello";
+        breadText.innerHTML = "Info";
         content.appendChild(breadText); 
 
         /*
@@ -39,3 +39,16 @@ function refreshContent() {
         */
     }
 }
+
+var skillsets = [
+    'Java',
+    'HTML',
+    'CSS',
+    'JavaScript',
+    'C++',
+    'C',
+    'C#',
+    'Python',
+    'MySql',
+    'MongoDB'
+]
