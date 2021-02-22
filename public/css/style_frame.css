@@ -220,7 +220,7 @@ body {
     top: 0;
     left: -300px; /*Hide as default*/
 
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
 
     display: flex;
@@ -250,7 +250,7 @@ body {
 
 /* Expand dropdownable content if class dropdown is added to parent div */
 .dropdown .dropdownable{ 
-    max-height:700px !important;
+    max-height:850px !important;
 
     transition-property: max-height;
 	transition-duration: 2s;
@@ -308,6 +308,63 @@ body {
 #main-wrapper.developer #sidebar #admin-tools,
 #main-wrapper.admin #sidebar #edit-profile {
     display: none;
+}
+
+#sidebar input[type=text],
+#sidebar input[type=email],
+#sidebar input[type=number],
+#sidebar textarea { 
+    box-sizing: border-box; /* border inside div */     
+    font-size: 15px;
+    border-radius: 5px;
+    outline: none; /* Disable auto-border*/
+    border:none;
+    padding: 5px 0 5px 5px;
+    background-color: grey;
+    width: 97%;
+    margin-bottom: 8px;
+    color: white;
+    cursor: pointer;
+
+    /* For text area */
+    resize: none;
+    font-family: Arial;
+}
+
+#sidebar input[type=text]:hover,
+#sidebar input[type=email]:hover,
+#sidebar input[type=number]:hover,
+#sidebar textarea:hover {
+    box-shadow: 0 0 8px var(--theme-main-hover);
+}
+
+#sidebar textarea {
+    height: 80px;
+}
+
+/* Remove arrows from number inputs*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Slider labels*/
+#sidebar label {
+    display:inline-block;
+    min-width: 30%;
+}
+
+#sidebar .slider {
+    margin-top: 10px;
+    width: 65%;
+}
+
+#sidebar .title {
+    color: #949494;
 }
 
 /*_____________________ CONTENT ______________________*/
@@ -375,8 +432,6 @@ body {
     left: 0;
     right:0;
     z-index: 5; 
-
-    border: 3px solid green;
 }
 
 #popup-container.display {
@@ -445,7 +500,7 @@ body {
 
 /*______________________ BUTTONS ________________________*/
 
-button {
+button, input[type=submit] {
     border: none;
     outline: none; /*Avoid border appearing when clicked*/
     color: #ffffff;
@@ -493,6 +548,32 @@ a {
 a:hover {
     color: var(--theme-main-hover);
 }
+
+/*______________________ SLIDER ________________________*/
+
+.slider {
+    -webkit-appearance: none;
+    height: 12px;
+    background: linear-gradient(90deg, var(--theme-main) 60%, grey 60%);
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+}
+
+.slider:hover {
+    box-shadow: 0 0 8px var(--theme-main-hover);
+}
+
+/* Google Chrome */
+.slider::-webkit-slider-thumb { 
+    visibility: hidden;
+}
+/* Mozilla Firefox */
+.slider::moz-range-thumb {
+    visibility: hidden;
+}
+
+
 
 /*_________________ RESPONSIVE HEADER _____________________*/
 /* All other responsiveness is handled in 'script.js' */

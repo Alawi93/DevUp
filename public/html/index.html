@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../script/script.js"></script>
+    <script src="../script/api-requests.js"></script>
     <script src="../script/temp-script.js"></script>
     <link rel="stylesheet" href="../css/style_frame.css">
     <link rel="stylesheet" href="../css/style_content.css">
@@ -42,11 +43,13 @@
             </div>
         </div>
 
+        <!------------------------ SIGN IN ------------_---------------->
+
         <div id="sign-in" class="shadow">
 
             <div id="sign-in-header">
                 <p id="sign-in-label"></p>
-                <button id="sign-in-close" onclick="signIn.hideSignIn()" class="btn-floating">X</button>
+                <button id="sign-in-close" onclick="signIn.hideSignIn()" class="btn-floating">✖</button>
             </div>
             <form autocomplete="off">
                 <input type="text" placeholder="Email" id="input-mail"><br>
@@ -65,7 +68,7 @@
             <div id="sidebar">
 
                 <div id="close">
-                    <button onclick="sidebar.toggleMenu()" class="btn-floating" style="margin:8px;">X</button>
+                    <button onclick="sidebar.toggleMenu()" class="btn-floating" style="margin:8px;">✖</button>
                 </div>
 
                 <div id="edit-profile">
@@ -75,9 +78,29 @@
                     </button>
                     <div class="dropdownable">
                         <div class="dropdown-inner">
-                            <p>Name</p>
-                            <p>Email</p>
-                            <p>Stuf</p>
+                            <form autocomplete="off" id="profile-form">
+                                <p class="title">Name</p>
+                                <input type="text" id="name" required="required"><br>
+                                <p class="title">Mail</p>
+                                <input type="email" id="mail" required="required"><br>
+                                <p class="title">Profession</p>
+                                <input type="text" id="profession"><br>
+                                <p class="title">Age</p>
+                                <input type="number" id="age" min="15" max="120"><br>
+                                <p class="title">Country</p>
+                                <input type="text" id="country"><br>
+                                <p class="title">Years of experience</p>
+                                <input type="number" id="years-experience" min="0" max="80"><br>
+                                <p class="title">Price per hour (SEK?)</p>
+                                <input type="number" id="hour-rate" min="0" max="10000"><br>
+                                <p class="title">Self description</p>
+                                <textarea id="description" maxlength="100" spellcheck="false"></textarea><br>
+                                <p class="title">Skillset</p>
+                                <div id="skillset"></div><br>
+                                <button class="btn-floating" title="Reset unsaved changes" onclick="sidebar.setProfileSection();return false;">✖</button>
+                                <!-- Submit evetlistener setup in 'sidebar.setProfileSection()' -->
+                                <input type=submit value="Submit changes" class="btn-floating">                          
+                            </form>                         
                         </div>
                     </div>
                 </div>
