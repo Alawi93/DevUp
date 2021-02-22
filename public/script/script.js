@@ -1,9 +1,8 @@
 $(document).ready(function () {
     $("#main-wrapper").addClass("not-logged-in"); // Remove for dev purposes
     sidebar.init();
-    sidebar.onResize();
 
-    demoMode.start(); // TEMP FOR DEV
+    //demoMode.start(); // TEMP FOR DEV
 });
 
 $(window).resize(function () {
@@ -20,6 +19,8 @@ const sidebar = {
     minWidthSidebar: 300,
     menuDisplayed: false,
     bigScreen: false,
+    availableSkills: [], // Load from server
+    searchFilter: {}, // Filter object for searching developers
     onResize: function () {
         this.bigScreen = $(window).width() > (this.minWidthContent + this.minWidthSidebar);
         if (this.bigScreen) {
@@ -32,13 +33,30 @@ const sidebar = {
             this.menuDisplayed = false;
         }
     },
-    init: function () {
-        // Do only once
+    init: function () { // Initialize sidebar at page load
+        this.onResize();
+        // Load available skillset from server
+        apiRequest.getSkillRegister();
+        // Initialize search filter object
+        this.searchFilter =
+        {
+            from_id: 0,
+            include_banned: false,
+            skills: [],
+            name_start: "",
+            price_max:10000
+        };
         // Event handler for submit profile changes
         $("#profile-form").on("submit", function (event) {
             event.preventDefault(); // Prevent redirect or reload, but still validate form fields.
             sidebar.submitProfileUpdate();
         });
+        // Event handler for submit developer search
+        $("#filter-form").on("submit", function (event) {
+            event.preventDefault(); 
+            sidebar.loadDevelopers();
+        });
+
     },
     toggleMenu: function () {
         if (this.menuDisplayed) {
@@ -57,56 +75,54 @@ const sidebar = {
     },
     setProfileSection: function () {
         const client = clientManager.client;
-        if (!client.isAdmin) {
-            const $profileSection = $("#edit-profile");
-            $profileSection.find("#name").val(client.name);
-            $profileSection.find("#mail").val(client.mail);
-            $profileSection.find("#profession").val(client.professionLabel);
-            $profileSection.find("#age").val(client.age);
-            $profileSection.find("#country").val(client.country);
-            $profileSection.find("#years-experience").val(client.yearsExperience);
-            $profileSection.find("#hour-rate").val(client.pricePerHour);
-            $profileSection.find("#description").val(client.selfDescription);
+        if (client) { // Safety measure
+            if (!client.isAdmin) {
+                const $profileSection = $("#edit-profile");
+                $profileSection.find("#name").val(client.name);
+                $profileSection.find("#mail").val(client.mail);
+                $profileSection.find("#profession").val(client.professionLabel);
+                $profileSection.find("#age").val(client.age);
+                $profileSection.find("#country").val(client.country);
+                $profileSection.find("#years-experience").val(client.yearsExperience);
+                $profileSection.find("#hour-rate").val(client.pricePerHour);
+                $profileSection.find("#description").val(client.selfDescription);
 
-            // Load all available skillsets from server -> MAYBE GET AT LOGIN???
-            const availableSkills = skillsets;
-            // Convert skillsets array to map for key-value access (skill, rating)
-            let skillMap = new Map();
-            for (availableSkill of availableSkills) {
-                skillMap.set(availableSkill, 0); //set skill rate to default 0
-            };
-            // Integrate client's skillset ratings
-            for (clientSkill of client.skillset) {
-                skillMap.set(clientSkill.skill, clientSkill.rate);
-            };
-            // Sort skills on ratings
+                // Convert skillsets array to map for key-value access (skill, rating)
+                let skillMap = new Map();
+                for (availableSkill of this.availableSkills) {
+                    skillMap.set(availableSkill, 0); //set skill rate to default 0
+                };
+                // Integrate client's skillset ratings
+                for (clientSkill of client.skillset) {
+                    skillMap.set(clientSkill.skill, clientSkill.rate);
+                };
+                // Update Profile section in sidebar
+                const $skillSection = $profileSection.find("#skillset");
+                // Clear div
+                $skillSection.empty();
+                // Rebuild div (add sliders for each skill)
+                for (let [key, value] of skillMap) {
+                    var skill = key;
+                    var rating = value;
+                    $skillSection.append(
+                        `<label for="${skill}">${skill}</label>
+                    <input type="range" id="${skill}" class="slider" min="0" max="10" value="${rating}"><br>`);
+                };
+                // Add evenlisteners for custom slider behaviours
+                var sliders = document.querySelectorAll("#skillset .slider");
 
-            // Update Profile section in sidebar
-            const $skillSection = $profileSection.find("#skillset");
-            // Clear div
-            $skillSection.empty();
-            // Rebuild div (add sliders for each skill)
-            for (let [key, value] of skillMap) {
-                var skill = key;
-                var rating = value;
-                $skillSection.append(
-                    `<label for="${skill}">${skill}</label>
-            <input type="range" id="${skill}" class="slider" min="0" max="10" value="${rating}"><br>`);
-            };
-            // Add evenlisteners for custom slider behaviours
-            var sliders = document.querySelectorAll("#skillset .slider");
+                sliders.forEach(function (slider) {
+                    updateSlider(slider);
+                    slider.addEventListener("mousemove", function () { updateSlider(slider) });
+                    slider.addEventListener("click", function () { updateSlider(slider) });
+                });
 
-            sliders.forEach(function (slider) {
-                updateSlider(slider);
-                slider.addEventListener("mousemove", function () { updateSlider(slider) });
-                slider.addEventListener("click", function () { updateSlider(slider) });
-            });
-
-            // Event handler for skillset sliders
-            function updateSlider(slider) {
-                var x = slider.value * 10;
-                var color = "linear-gradient(90deg, var(--theme-main) " + x + "%, grey " + x + "%)";
-                slider.style.background = color;
+                // Event handler for skillset sliders
+                function updateSlider(slider) {
+                    var x = slider.value * 10;
+                    var color = "linear-gradient(90deg, var(--theme-main) " + x + "%, grey " + x + "%)";
+                    slider.style.background = color;
+                };
             };
         };
     },
@@ -141,6 +157,69 @@ const sidebar = {
         upd_client.skillset = upd_skillset;
         // 3. Make server request
         apiRequest.updateProfile(upd_client);
+    },
+    setSearchSection() {
+        // Add evenlisteners for custom price slider behaviour
+        var slider = document.querySelector("#filter-search .slider");
+        var label = document.querySelector("#filter-search #price-selected");
+        slider.addEventListener("mousemove", function () { updateSlider(slider, label) });
+        slider.addEventListener("click", function () { updateSlider(slider, label) });
+
+        function updateSlider(slider, label) {
+            // Update slider colors
+            var x = slider.value;
+            var color = "linear-gradient(90deg, var(--theme-main) " + x + "%, grey " + x + "%)";
+            slider.style.background = color;
+            // Update label
+            label.innerHTML = slider.value * 50; //0-5100-> 0-5000  
+        };
+        // Set an initial slider value
+        updateSlider(slider, label);
+
+        // Update available skillsets
+        const skillSection = document.querySelector("#filter-search #filter-skills");
+        // Clear section
+        skillSection.innerHTML = "";
+        // Rebuild section
+        for(skill of this.availableSkills) {
+            skillSection.insertAdjacentHTML("beforeend", 
+            `<label class="checkbox-container">${skill}
+            <input type="checkbox" id="${skill}" onclick="sidebar.checkboxUpdate(this);">
+            <span class="checkmark"></span>
+            </label><br>`);
+        };
+    },
+    checkboxUpdate: function(checkbox) {
+        // Set parent label to white font if checkbox is checked
+        checkbox.parentNode.style.color = checkbox.checked ? "white" : "";
+    },
+    loadDevelopers: function () {
+       // Update filter object 'searchFilter'
+       // NOTE: Server verifies client search privelegies.
+        this.searchFilter.from_id = 0; // This is a new search
+        if(clientManager.client)  { // Security measure
+            this.searchFilter.include_banned = clientManager.client.isAdmin;
+        }
+        // Update filter object according to sidebar dropdown: "Filter search"
+        const $searchSection = $("#filter-search");
+        this.searchFilter.name_start = $searchSection.find("#filter-name").val();
+        this.searchFilter.price_max = $searchSection.find("#price-selected").text();
+        // Load checked skills
+        this.searchFilter.skills = []; // Clear skill list
+        $searchSection.find("input[type=checkbox]").each(function() {
+            if(this.checked) {
+                const skill = this.id;
+                sidebar.searchFilter.skills.push(skill);
+            };
+        });
+        // Make server request, passing the updated search filter object
+        apiRequest.getDevelopers(this.searchFilter, false);
+    },
+    loadMoreDevelopers: function() {
+        // Calculate highest dev id among currently displayed developers
+        const highestShownDevId = 3; // UPDATE
+        this.searchFilter.from_id = highestShownDevId;
+        apiRequest.getDevelopers(this.searchFilter, true);
     }
 };
 
@@ -174,13 +253,15 @@ const signIn = {  // Drop down from header
         $("#content").fadeTo("slow", 1); // Unfade background
         this.signInDisplayed = false;
     },
-    submitSignIn: function () {
+    submit: function () {
+        const email = $("#sign-in-header").find("#input-mail").val();
+        const pwd = $("#sign-in-header").find("#input-pwd").val();
         if (this.approach == "login") {
-
             alert("Login");
-
+            apiRequest.login(email, pwd);
         } else {
-            alert("Regsiter")
+            alert("Regsiter");
+            apiRequest.register(email, pwd);
         }
         this.hideSignIn();
     }
@@ -191,6 +272,7 @@ const clientManager = {
     setClient: function (client) {
         this.client = client;
         sidebar.setProfileSection();
+        $("#header #label-name").text(this.client.name.toUpperCase())
     },
     viewAdapt: function (clientProfile) {
         // Adapt view to type of client
@@ -198,11 +280,6 @@ const clientManager = {
         $("#main-wrapper").removeClass("developer");
         $("#main-wrapper").removeClass("admin");
         $("#main-wrapper").addClass(clientProfile);
-        if (clientProfile == "developer") {
-            $("#label-name").text(this.client.name.toUpperCase());
-        } else if (clientProfile == "admin") {
-            $("#label-name").text("ADMIN");
-        }
     },
     logout: function () {
         if (demoMode.isOn) {
@@ -267,7 +344,7 @@ const demoMode = {
         this.isOn = true;
         signIn.hideSignIn();
         sidebar.onResize();
-        refreshContent();
+        apiRequest.getDevelopers();
         popup.display("Demo mode started",
             ["Explore the view when logged in as a software developer.",
                 "API access is limited in demo mode."]);
@@ -275,6 +352,6 @@ const demoMode = {
     end: function () {
         this.isOn = false;
         $("#main-wrapper").removeClass("demo-mode");
-        popup.display("Demo mode ended", ["Hope you liked it."]);
+        popup.display("Demo mode ended", ["Continue to browse developers, or create an account."]);
     }
 };

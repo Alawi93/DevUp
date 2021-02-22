@@ -97,9 +97,12 @@
                                 <textarea id="description" maxlength="100" spellcheck="false"></textarea><br>
                                 <p class="title">Skillset</p>
                                 <div id="skillset"></div><br>
-                                <button class="btn-floating" title="Reset unsaved changes" onclick="sidebar.setProfileSection();return false;">✖</button>
-                                <!-- Submit evetlistener setup in 'sidebar.init()' -->
-                                <input type=submit value="Submit changes" class="btn-floating">                          
+                                <div id="profile-submit">
+                                    <button class="btn-floating" title="Reset unsaved changes"
+                                        onclick="sidebar.setProfileSection();return false;">✖</button>
+                                    <!-- Evetlistener setup in 'sidebar.init()' -->
+                                    <input type=submit value="Submit changes" class="btn-floating">
+                                </div>
                             </form>                         
                         </div>
                     </div>
@@ -112,7 +115,19 @@
                     </button>
                     <div class="dropdownable">
                         <div class="dropdown-inner">
-                            <p>Stuf</p>
+                            <form autocomplete="off" id="filter-form">
+                                <p class="title">Name</p>
+                                <input type="text" id="filter-name"><br>
+                                <p class="title">Max price per hour (SEK) ??</p>
+                                <label for="filter-price" id="price-selected"></label>
+                                <input type="range" id="filter-price" class="slider" min="0" max="100" value="50">
+                                <p class="title">Skillset</p>
+                                <div id="filter-skills"></div> <!-- Injection point for skills provided by server -->
+                                <div id="search-submit">
+                                    <!-- Evetlistener setup in 'sidebar.init()' -->
+                                    <input type=submit value="Search" class="btn-floating">
+                                </div>        
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -160,15 +175,15 @@
             <!--------------------- MAIN CONTENT------------------------>
 
             <div id="content">
-
-                
                 <!-- Injection point for dynamically rendered content-->
+
                 <div class="card-test shadow">
                     <p class="card-header">Welcome!</p>
                     <div class="card-content">
                         <p>DevUp is a convenient market place for software developers.</p><br>
                         <p>Browse developers, or create a developer account to get started.</p><br>
-                        <button onclick="refreshContent();" class="btn-floating">Start</button>
+                        <p>New here? Try the <a href="javascript:demoMode.start();"> developer demo</a></p><br>
+                        <button onclick="sidebar.loadDevelopers();" class="btn-floating">Start</button>
                     </div>
                 </div>
             </div>
@@ -179,7 +194,6 @@
 
         <div id="popup-container">
             <div id="popup" class="shadow">
-                <!-- https://www.w3schools.com/howto/howto_css_modals.asp -->
                 <p id="popup-header"></p>
                 <div id = popup-msg></div>
                 <button id="popup-discard" onclick="popup.discard()" class="btn-floating">OK</button>
