@@ -2,10 +2,6 @@
 Temporary script to load content into the content body of the frame
  */
 
-$(document).ready(function () {
-    //refreshContent();      
-});
-
 function refreshContent() {
     const contentDiv = document.getElementById("content");
     // Clear div
@@ -40,7 +36,7 @@ function refreshContent() {
     }
 }
 
-var skillsets = [
+var tempSkillsets = [
     'Java',
     'HTML',
     'CSS',
