@@ -41,17 +41,6 @@ router.put('/', function (req, res) { //update
     // inte admin - skriv över allt förutom isBanned, rating etc
     //isadmin? update everything (skriv över alla attribut)
 });
-/// TEMP DELETE LATER *******************
-/* const userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    isAdmin: Boolean,
-    banUntil: Date,
-});
-
-const user = mongoose.model('User', userSchema)
-*/
-// *******************************************
 
 //  https://localhost/api/member/login
 router.post('/login', function (req, res) {
