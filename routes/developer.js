@@ -6,6 +6,7 @@ var router      = express.Router();
 router.get('/',function(req,res){ //also includes get filtered members
     var body = req.body;
 
+    
     //const filter = body.filter
 
     //isadmin? yes -> more chooices : no less

@@ -3,51 +3,81 @@ var router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const memCont = require('../controller/memberController');
-
-
-//https://localhost/api/member/delete
-router.delete('/', function (req, res) { //delete 
-    User.findOne({ email: req.body.email }, function (err, user) {
-        if (err) {
-            console.log(err);
-            res.status(500).json({
-                message: { body: "Internal Server Error, please try again later!" },
-                statusCode: res.statusCode,
-            });
-        }
-        user.comparePassword(req.body.password, function (err, isMatch) {
-            if (!isMatch) {
-                res.status(403).json({
-                    message: { body: "User exist but password does not match." },
-                    statusCode: res.statusCode,
-                });
-            } else {
-                user.delete();
-                res.status(200).send({
-                    message: { body: "Delete Complete." },
-                    statusCode: res.statusCode,
-                });
-            }
-        });
-
-    });
-
-
-});
+mongoose.set('useFindAndModify', false);
 
 //https://localhost/api/member
 router.put('/', function (req, res) { //update
     // req.body = json objekt    
-    // inte admin - skriv över allt förutom isBanned, rating etc
-    //isadmin? update everything (skriv över alla attribut)
+    // compare hashed passwords
+
+    let filter = { email: req.body.email };
+    let clientUpdate = {
+        email: req.body.email,
+        name: req.body.name,
+        professionLabel: req.body.professionLabel,
+        age: req.body.age,
+        country: req.body.country,
+        yearsExperience: req.body.yearsExperience,
+        pricePerHour: req.body.pricePerHour,
+        github: req.body.github,
+        linkedin: req.body.linkedin,
+        memberSince: req.body.memberSince,
+        selfDescription: req.body.selfDescription,
+        isBanned: req.body.isBanned,
+        skillset: req.body.skillset
+    };
+
+    User.findOneAndUpdate(filter, clientUpdate, { new: true }, function (err, dbUserData) {
+        if (err) {
+            console.log(err);
+            res.status(500).json({
+                message: { body: "Internal Server Error, please try again later!" },
+                statusCode: res.statusCode,
+            });
+        } else {
+
+            res.status(200).send({
+                message: { body: "User Sucessfully Updated." },
+                statusCode: res.statusCode,
+                dbUserData,
+            });
+        }
+
+    });
+});
+
+
+//https://localhost/api/member/ban
+router.put('/ban', function (req, res) { //update
+    console.log(req.body)
+    let filter = { email: req.body.email };
+    let banUpdate = { isBanned: req.body.ban }
+
+    User.findOneAndUpdate(filter, banUpdate, { new: true }, function (err, dbUserData) {
+        if (err) {
+            console.log(err);
+            res.status(500).json({
+                message: { body: "Internal Server Error, please try again later!" },
+                statusCode: res.statusCode,
+            });
+        } else {
+
+            res.status(200).send({
+                message: { body: "User Sucessfully Banned." },
+                statusCode: res.statusCode,
+                dbUserData,
+            });
+        }
+
+    });
 });
 
 //  https://localhost/api/member/login
 router.post('/login', function (req, res) {
-    //let loginData = req.query;
-    // userExist(loginData, res)
+    let filter = { email: req.body.email };
+    let pwd = req.body.password;
 
-    User.findOne({ email: req.body.email }, function (err, user) {
+    User.findOne(filter, function (err, dbUserData) {
         if (err) {
             console.log(err);
             res.status(500).json({
@@ -55,21 +85,23 @@ router.post('/login', function (req, res) {
                 statusCode: res.statusCode,
             });
         }
-        user.comparePassword(req.body.password, function (err, isMatch) {
+        dbUserData.comparePassword(pwd, function (err, isMatch) {
             if (!isMatch) {
                 res.status(403).json({
                     message: { body: "User exist but password does not match." },
                     statusCode: res.statusCode,
                 });
             }
-            let userBan = memCont.isBanned(user)
-            console.log(userBan)
+            let userBan = dbUserData.isBanned;
             if (userBan) {
                 res.status(403).json({
                     message: { body: "User is BANNED!." },
                     statusCode: res.statusCode,
                 });
             } else {
+
+                let user = memCont.createClientObject(dbUserData)
+
                 res.status(200).send({
                     message: { body: "Login successfully." },
                     statusCode: res.statusCode,
@@ -84,9 +116,9 @@ router.post('/login', function (req, res) {
 
 // https://localhost/api/member/register
 router.post('/register', function (req, res) { // hashing salt
-    //json "success"
+    let filter = { email: req.body.email };
 
-    User.findOne({ email: req.body.email }, function (err, user) {
+    User.findOne(filter, function (err, user) {
         if (err) {
             console.log(err);
             res.status(500).json({
@@ -101,7 +133,6 @@ router.post('/register', function (req, res) { // hashing salt
             });
         } else {
             const user = new User({
-                _id: 1,
                 password: req.body.password,
                 isAdmin: false,
                 email: req.body.email,
@@ -111,8 +142,6 @@ router.post('/register', function (req, res) { // hashing salt
                 yearsExperience: req.body.yearsExperience,
                 profilePictPath: req.body.profilePictPath,
                 pricePerHour: req.body.pricePerHour,
-                rating: req.body.rating,
-                ratings: req.body.ratings,
                 memberSince: Date.now(),
                 selfDescription: req.body.selfDescription,
                 skillset: req.body.skillset
@@ -138,8 +167,13 @@ router.post('/register', function (req, res) { // hashing salt
 });
 
 
+
 router.get('/logout', function (req, res) {
     //redirect to root route /
 });
 
+
+router.get('/isloggedin', function (req, res) {
+    //redirect to root route /
+});
 module.exports = router;
