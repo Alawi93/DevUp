@@ -257,10 +257,8 @@ const signIn = {  // Drop down from header
         const email = $("#sign-in-header").find("#input-mail").val();
         const pwd = $("#sign-in-header").find("#input-pwd").val();
         if (this.approach == "login") {
-            alert("Login");
             apiRequest.login(email, pwd);
         } else {
-            alert("Regsiter");
             apiRequest.register(email, pwd);
         }
         this.hideSignIn();
@@ -344,10 +342,11 @@ const demoMode = {
         this.isOn = true;
         signIn.hideSignIn();
         sidebar.onResize();
-        apiRequest.getDevelopers();
+        
         popup.display("Demo mode started",
             ["Explore the view when logged in as a software developer.",
                 "API access is limited in demo mode."]);
+        apiRequest.getDevelopers();
     },
     end: function () {
         this.isOn = false;
