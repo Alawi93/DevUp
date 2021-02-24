@@ -35,9 +35,32 @@ function userExist(loginData, res) {
     });
 }
 
+function createClientObject(user){
+    let returnUser = {
+        _id: user._id,
+        password: user.password,
+        isAdmin: user.isAdmin,
+        email: user.email,
+        name: user.name,
+        professionLabel: user.professionLabel,
+        age: user.age,
+        country: user.country,
+        yearsExperience: user.yearsExperience,
+        pricePerHour: user.pricePerHour,
+        github: user.github,
+        linkedin: user.linkedin,
+        memberSince: user.memberSince,
+        selfDescription: user.selfDescription,
+        isBanned: user.isBanned,
+        skillset: user.skillset
+    };
+    return returnUser;
+}
+
 
 
 
 module.exports = {
     isBanned: isBanned,
+    createClientObject: createClientObject,
 }
