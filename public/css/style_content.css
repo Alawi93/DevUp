@@ -1,0 +1,227 @@
+*{
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* THEMES */
+    --theme-main: #747fe2;
+    --theme-main-hover: #77abdb;
+    --theme-main-active: #354757;
+
+    /* BACKGROUNDS */ 
+    --white: white;
+    --light: #e7e6e7;
+    --dark: #3d4557;
+    --dark-light: #5a5d63;
+
+    /* ADMIN BUTTONS */
+    --banRed: #e74c3c ;
+    --unbanGreen: #2ecc71;
+}
+
+.cardsContainer {
+    background: #fefefe;
+}
+
+.container {
+    width: 95%;
+    margin: 50px auto;
+}
+
+.heading {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+
+.cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    font-family: 'Courier New', Courier, monospace,sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    max-width: 350px;
+    min-width: 350px;
+    background: #FFF;
+    border: 1px solid #CCC;
+    margin: 0px 7px 15px 7px;
+    transition: 0.3s;
+    border-radius: 20px;
+    overflow: hidden;
+    color: #888;
+}
+
+.bannedCard {
+    opacity: 0.7;
+}
+
+.notBannedCard {
+    opacity: 1.0;
+}
+
+.cardHeader {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0px 20px 20px 20px;
+    color: #fff;
+    background-color:var(--theme-main);
+}
+
+.adminBtn {
+    font-size: 20px;
+    align-self: flex-end;
+    margin: 10px;
+    padding: 0px;
+    visibility: hidden;
+    text-decoration: none;
+}
+
+.banBtn {
+    color: var(--banRed);
+}
+
+.unbanBtn {
+    color: var(--unbanGreen);
+}
+
+.deleteSpan {
+    vertical-align: middle;
+    display: inline-block;
+    font-family: sans-serif;
+    font-weight: normal;
+    font-size: 10px;
+    color: white;
+    transition: all 0.35s ease-in-out 0s;
+    overflow: hidden;
+    margin: 0px 2px 0px 0px;
+    width: 0px;
+    opacity: 0.0;
+    border-radius: 3px;
+}
+
+.banSpan{
+    background-color: var(--banRed);
+    
+}
+
+.unbanSpan {
+    background-color: var(--unbanGreen);
+}
+
+.linkIcon{
+    transition: 0.1s;
+}
+
+.linkIcon:hover {
+    transform: scale(1.06);
+}
+
+.linksContainer a {
+    font-size: 24px;
+    color:white;
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px 5px 30px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.skillsContainer {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: auto;
+}
+.about {
+    margin-top: 20px;
+    
+}
+
+.skillsTitle {
+    display: flex;
+    color: 	 	#C0C0C0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.skill {
+    background-color: #FFF;
+    display: inline-block;
+    color: var(--theme-main);
+    padding: 3px;
+    border-radius: 20px;
+    border: 1px solid var(--theme-main);
+    margin: 2px 2px;
+    font-size: 11px;
+}
+
+.skillLevel {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 10px;
+    transition: all 0.35s ease-in-out 0s;
+    overflow: hidden;
+    color: var(--theme-main);
+    width: 0px;
+    opacity: 0.0;
+    padding: 2px;
+    border-radius: 0px 20px 20px 0px;
+    border-top: 1px solid var(--theme-main);
+    border-right: 1px solid var(--theme-main);
+    border-bottom: 1px solid var(--theme-main);
+    border-left: none;
+}
+
+.skillSpan:hover .skillLevel{
+    opacity: 1.0;
+    width: 30px;
+}
+
+.btn {
+    color: #FFF;
+    text-align: center;
+    background: var(--theme-main);
+    font-size: 20px;
+    margin: 1px 50px 15px 50px;
+    border-radius: 5px;
+    padding: 3px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.04);
+    background-color: var(--theme-main-hover);
+    color: white;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover .adminBtn {
+    visibility: visible;
+}
+
+.adminBtn:hover {
+    color: white;
+}
+
+
+.adminBtn:hover .deleteSpan{
+    opacity: 1.0;
+    width: 50px;
+}
+
