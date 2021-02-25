@@ -255,7 +255,7 @@ body {
 
 /* Expand dropdownable content if class dropdown is added to parent div */
 .dropdown .dropdownable{ 
-    max-height:850px !important;
+    max-height:970px !important;
 
     transition-property: max-height;
 	transition-duration: 2s;
