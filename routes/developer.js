@@ -11,6 +11,7 @@ const devCont   = require('../controller/developerController');
      * 3. Icke inloggad måste skicka ett default request {"is_admin": false,"skills": [],"name_start": "","price_max" : 1000}
      */
 
+
 //https://localhost/api/developers
 router.post('/',function(req,res){ 
    var body = req.body;

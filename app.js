@@ -31,6 +31,8 @@ app.get("/",function(req,res){
 
 middleware.checkSkillSets();
 middleware.checkCreateDummyUser();
+middleware.checkAddAdmin();
+
 app.listen(port, ()=>{
 
     console.log(`Server started on port: ${port}`)

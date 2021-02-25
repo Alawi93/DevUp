@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../script/script.js"></script>
+    <script src="../script/scriptFrame.js"></script>
     <script src="../script/api-requests.js"></script>
     <script src="../script/temp-script.js"></script>
     <link rel="stylesheet" href="../css/style_frame.css">
@@ -37,7 +37,7 @@
             <div id="header-child-3">
                 <a href="javascript:signIn.toggleSignIn('register')" id="link-register">Register</a>
                 <button id="btn-login" onclick="signIn.toggleSignIn('login')" class="btn-floating">Login</button>
-                <button id="btn-end-demo" onclick="clientManager.logout()" class="btn-floating">END DEMO</button>
+                <button id="btn-end-demo" onclick="sidebar.requestLogout()" class="btn-floating">END DEMO</button>
                 <p id="label-name">NAME</p>
                 <img id="img-profile" src="../images/profile.png" onclick="sidebar.toggleDropdown('edit-profile')">
             </div>
@@ -81,7 +81,7 @@
                             <form autocomplete="off" id="profile-form">
                                 <p class="title">Name</p>
                                 <input type="text" id="name" required="required"><br>
-                                <p class="title">Mail</p>
+                                <p class="title">Email</p>
                                 <input type="email" id="mail" required="required"><br>
                                 <p class="title">Profession</p>
                                 <input type="text" id="profession"><br>
@@ -91,8 +91,12 @@
                                 <input type="text" id="country"><br>
                                 <p class="title">Years of experience</p>
                                 <input type="number" id="years-experience" min="0" max="80"><br>
-                                <p class="title">Price per hour (SEK?)</p>
+                                <p class="title">Price per hour ($)</p>
                                 <input type="number" id="hour-rate" min="0" max="10000"><br>
+                                <p class="title">GitHub</p>
+                                <input type="text" id="github"><br>
+                                <p class="title">Linkedin</p>
+                                <input type="text" id="linkedin"><br>
                                 <p class="title">Self description</p>
                                 <textarea id="description" maxlength="100" spellcheck="false"></textarea><br>
                                 <p class="title">Skillset</p>
@@ -118,7 +122,7 @@
                             <form autocomplete="off" id="filter-form">
                                 <p class="title">Name</p>
                                 <input type="text" id="filter-name"><br>
-                                <p class="title">Max price per hour (SEK) ??</p>
+                                <p class="title">Max price per hour ($)</p>
                                 <label for="filter-price" id="price-selected"></label>
                                 <input type="range" id="filter-price" class="slider" min="0" max="100" value="50">
                                 <p class="title">Skillset</p>
@@ -166,7 +170,7 @@
                 <div class="filler"></div>
 
                 <div id="sidebar-footer">
-                    <button id="btn-logout" onclick="clientManager.logout()" class="btn-sidebar"
+                    <button id="btn-logout" onclick="sidebar.requestLogout()" class="btn-sidebar"
                         style="text-align: center;">Log out</button>
                 </div>
 
@@ -183,7 +187,7 @@
                         <p>DevUp is a convenient market place for software developers.</p><br>
                         <p>Browse developers, or create a developer account to get started.</p><br>
                         <p>New here? Try the <a href="javascript:demoMode.start();"> developer demo</a></p><br>
-                        <button onclick="sidebar.loadDevelopers();" class="btn-floating">Start</button>
+                        <button onclick="sidebar.requestDevelopers();" class="btn-floating">Start</button>
                     </div>
                 </div>
             </div>

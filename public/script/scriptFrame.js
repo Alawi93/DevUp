@@ -1,14 +1,12 @@
 $(document).ready(function () {
     $("#main-wrapper").addClass("not-logged-in"); // Remove for dev purposes
+    apiRequest.getSkillSets();
     sidebar.init();
-
-    //demoMode.start(); // TEMP FOR DEV
 });
 
 $(window).resize(function () {
     sidebar.onResize();
 });
-
 
 // ___________________________ SCREEN SIZE, MENUES & BEHAVIOUR _________________________________
 
@@ -36,12 +34,11 @@ const sidebar = {
     init: function () { // Initialize sidebar at page load
         this.onResize();
         // Load available skillset from server
-        apiRequest.getSkillRegister();
+        apiRequest.getSkillSets();
         // Initialize search filter object
         this.searchFilter =
         {
-            from_id: 0,
-            include_banned: false,
+            is_admin: false,
             skills: [],
             name_start: "",
             price_max:10000
@@ -54,7 +51,7 @@ const sidebar = {
         // Event handler for submit developer search
         $("#filter-form").on("submit", function (event) {
             event.preventDefault(); 
-            sidebar.loadDevelopers();
+            sidebar.requestDevelopers();
         });
 
     },
@@ -79,12 +76,14 @@ const sidebar = {
             if (!client.isAdmin) {
                 const $profileSection = $("#edit-profile");
                 $profileSection.find("#name").val(client.name);
-                $profileSection.find("#mail").val(client.mail);
+                $profileSection.find("#mail").val(client.email);
                 $profileSection.find("#profession").val(client.professionLabel);
                 $profileSection.find("#age").val(client.age);
                 $profileSection.find("#country").val(client.country);
                 $profileSection.find("#years-experience").val(client.yearsExperience);
                 $profileSection.find("#hour-rate").val(client.pricePerHour);
+                $profileSection.find("#github").val(client.github);
+                $profileSection.find("#linkedin").val(client.linkedin);
                 $profileSection.find("#description").val(client.selfDescription);
 
                 // Convert skillsets array to map for key-value access (skill, rating)
@@ -94,7 +93,7 @@ const sidebar = {
                 };
                 // Integrate client's skillset ratings
                 for (clientSkill of client.skillset) {
-                    skillMap.set(clientSkill.skill, clientSkill.rate);
+                    skillMap.set(clientSkill.skillName, clientSkill.skillRate);
                 };
                 // Update Profile section in sidebar
                 const $skillSection = $profileSection.find("#skillset");
@@ -133,12 +132,14 @@ const sidebar = {
         // 1. Collect updatable fields from profile section:
         const $profileSection = $("#edit-profile");
         upd_client.name = $profileSection.find("#name").val();
-        upd_client.mail = $profileSection.find("#mail").val();
+        upd_client.email = $profileSection.find("#mail").val();
         upd_client.professionLabel = $profileSection.find("#profession").val();
         upd_client.age = $profileSection.find("#age").val();
         upd_client.country = $profileSection.find("#country").val();
         upd_client.yearsExperience = $profileSection.find("#years-experience").val();
         upd_client.pricePerHour = $profileSection.find("#hour-rate").val();
+        upd_client.github = $profileSection.find("#github").val();
+        upd_client.linkedin = $profileSection.find("#linkedin").val();
         upd_client.description = $profileSection.find("#description").val();
         // 2. Collect and filter skills with rating > 0
         const upd_skillset = [];
@@ -148,8 +149,8 @@ const sidebar = {
             skillRate = skillSlider.value;
             if (skillRate > 0) {
                 upd_skillset.push({
-                    skill: skillName,
-                    rate: skillRate
+                    skillName: skillName,
+                    skillRate: skillRate
                 });
             };
         };
@@ -171,7 +172,7 @@ const sidebar = {
             var color = "linear-gradient(90deg, var(--theme-main) " + x + "%, grey " + x + "%)";
             slider.style.background = color;
             // Update label
-            label.innerHTML = slider.value * 50; //0-5100-> 0-5000  
+            label.innerHTML = slider.value * 5; //0-100-> 0-500  
         };
         // Set an initial slider value
         updateSlider(slider, label);
@@ -193,12 +194,11 @@ const sidebar = {
         // Set parent label to white font if checkbox is checked
         checkbox.parentNode.style.color = checkbox.checked ? "white" : "";
     },
-    loadDevelopers: function () {
+    requestDevelopers: function () {
        // Update filter object 'searchFilter'
        // NOTE: Server verifies client search privelegies.
-        this.searchFilter.from_id = 0; // This is a new search
         if(clientManager.client)  { // Security measure
-            this.searchFilter.include_banned = clientManager.client.isAdmin;
+            this.searchFilter.is_admin = clientManager.client.isAdmin;
         }
         // Update filter object according to sidebar dropdown: "Filter search"
         const $searchSection = $("#filter-search");
@@ -213,13 +213,17 @@ const sidebar = {
             };
         });
         // Make server request, passing the updated search filter object
-        apiRequest.getDevelopers(this.searchFilter, false);
+        apiRequest.getDevelopers(this.searchFilter);
     },
-    loadMoreDevelopers: function() {
-        // Calculate highest dev id among currently displayed developers
-        const highestShownDevId = 3; // UPDATE
-        this.searchFilter.from_id = highestShownDevId;
-        apiRequest.getDevelopers(this.searchFilter, true);
+    requestLogout: function () {
+        if (demoMode.isOn) {
+            demoMode.end();
+            this.viewAdapt("not-logged-in");
+            sidebar.onResize(); 
+        } else {
+            apiRequest.logout();
+        }
+        
     }
 };
 
@@ -251,28 +255,38 @@ const signIn = {  // Drop down from header
     hideSignIn: function () {
         $("#sign-in").removeClass("display");
         $("#content").fadeTo("slow", 1); // Unfade background
+        // Clear fields
+        $("#sign-in-header").find("#input-mail").empty();
+        $("#sign-in-header").find("#input-pwd").empty();;
         this.signInDisplayed = false;
     },
     submit: function () {
         const email = $("#sign-in-header").find("#input-mail").val();
         const pwd = $("#sign-in-header").find("#input-pwd").val();
         if (this.approach == "login") {
-            alert("Login");
             apiRequest.login(email, pwd);
         } else {
-            alert("Regsiter");
             apiRequest.register(email, pwd);
         }
         this.hideSignIn();
+        sidebar.onResize();
     }
 };
 
 const clientManager = {
     client: null,
-    setClient: function (client) {
+    loginSuccessful: function (client) {
+        this.setClient(client);      
+        this.viewAdapt(client.isAdmin ? "admin" : "developer");
+    },
+    logoutSuccessful: function() {
+        this.client = null;
+        this.viewAdapt("not-logged-in");
+    },
+    setClient: function(client) {
         this.client = client;
         sidebar.setProfileSection();
-        $("#header #label-name").text(this.client.name.toUpperCase())
+        $("#header #label-name").text(this.client.name.toUpperCase());
     },
     viewAdapt: function (clientProfile) {
         // Adapt view to type of client
@@ -280,13 +294,6 @@ const clientManager = {
         $("#main-wrapper").removeClass("developer");
         $("#main-wrapper").removeClass("admin");
         $("#main-wrapper").addClass(clientProfile);
-    },
-    logout: function () {
-        if (demoMode.isOn) {
-            demoMode.end();
-        };
-        sidebar.onResize();
-        this.viewAdapt("not-logged-in");
     }
 };
 
@@ -300,7 +307,6 @@ const popup = {
             popupMsg.insertAdjacentHTML("beforeend",
                 `<p>${line}</p><br>`);
         };
-
         // $("#popup-msg").text(msg);
         $("#popup-container").addClass("display");
         $("#content-wrapper").fadeTo("slow", 0.3); // Fade background
@@ -317,7 +323,8 @@ const demoMode = {
     demoClient:
     {
         _id: 1,
-        mail: "john@mail.com",
+        email: "john@mail.com",
+        password: "",
         isAdmin: false,
         name: "John Ohlsson",
         professionLabel: "Web developer",
@@ -325,29 +332,28 @@ const demoMode = {
         country: "SWEDEN",
         yearsExperience: 5,
         pricePerHour: 1100,
-        rating: 4.5,
-        ratings: 7,
+        github: "DevOps97",
+        linkedin: "Wee",
         memberSince: "2020-09-12",
         selfDescription: "A dedicated software developer.",
-        banUntil: "never",
+        isBanned: false,
         skillset: [
-            { skill: "Java", rate: 8 },
-            { skill: "HTML", rate: 2 },
-            { skill: "JavaScript", rate: 4 },
-            { skill: "Python", rate: 3 },
-            { skill: "MySql", rate: 6 }]
+            { skillName: "Java", skillRate: 8 },
+            { skillName: "HTML", skillRate: 2 },
+            { skillName: "JavaScript", skillRate: 4 },
+            { skillName: "Python", skillRate: 3 },
+            { skillName: "MySql", skillRate: 6 }]
     },
     start: function () { // 'developer' / 'admin'
-        clientManager.setClient(this.demoClient);
-        clientManager.viewAdapt("developer");
+        clientManager.loginSuccessful(this.demoClient); // REMOVE LATER?
         $("#main-wrapper").addClass("demo-mode");
         this.isOn = true;
         signIn.hideSignIn();
         sidebar.onResize();
-        apiRequest.getDevelopers();
         popup.display("Demo mode started",
             ["Explore the view when logged in as a software developer.",
                 "API access is limited in demo mode."]);
+        apiRequest.getDevelopers();
     },
     end: function () {
         this.isOn = false;

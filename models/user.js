@@ -8,7 +8,10 @@ var validateEmail = function(email) {
 };
 // Schema
 const userSchema = new mongoose.Schema({
-    _id: Number,
+    _id: {
+        type: mongoose.Types.ObjectId,
+        default: mongoose.Types.ObjectId(),
+    },
     email: {
         type: String,
         trim: true,
@@ -19,24 +22,32 @@ const userSchema = new mongoose.Schema({
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Not a a valid email'],
     },
     password: String,
-    isAdmin: Boolean,
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    name: String,
     professionLabel: String,
     age: Number,
     country: String,
     yearsExperience: Number,
-    profilePictPath: String,
     pricePerHour: Number,
-    rating: Number,
-    ratings: Number,
+    github:{
+        type:String,
+        default: "https://github.com/"
+    },
+    linkedin:{
+        type:String,
+        default: "https://www.linkedin.com/"
+    },
     memberSince: {
         type: Date,
         default: Date.now(),
-
     },
     selfDescription: String,
-    banUntil: {
-        type: Date,
-        default:undefined
+    isBanned: {
+        type: Boolean,
+        default: false,
     },
     skillset: [{
         skillName: String,
