@@ -579,8 +579,7 @@ a:hover {
 }
 
 /* Google Chrome */
-.slider::-webkit-slider-thumb,
-.slider::-moz-range-thumb { 
+.slider::-webkit-slider-thumb { 
     visibility: hidden;
 }
 /* Mozilla Firefox */
