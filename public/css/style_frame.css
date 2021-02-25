@@ -421,7 +421,7 @@ input[type=number] {
     
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: baseline;
     
 
@@ -603,7 +603,8 @@ a:hover {
 }
 
 /* Google Chrome */
-.slider::-webkit-slider-thumb { 
+.slider::-webkit-slider-thumb,
+.slider::-moz-range-thumb { 
     visibility: hidden;
 }
 /* Mozilla Firefox */
