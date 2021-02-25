@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#main-wrapper").addClass("not-logged-in"); // Remove for dev purposes
-    apiRequest.getSkillSets();
+    // apiRequest.getSkillSets();
     sidebar.init();
 });
 
@@ -33,8 +33,6 @@ const sidebar = {
     },
     init: function () { // Initialize sidebar at page load
         this.onResize();
-        // Load available skillset from server
-        apiRequest.getSkillSets();
         // Initialize search filter object
         this.searchFilter =
         {
@@ -43,6 +41,9 @@ const sidebar = {
             name_start: "",
             price_max:10000
         };
+        // Load available skillset from server
+        apiRequest.getSkillSets();
+        
         // Event handler for submit profile changes
         $("#profile-form").on("submit", function (event) {
             event.preventDefault(); // Prevent redirect or reload, but still validate form fields.
@@ -114,6 +115,7 @@ const sidebar = {
                     updateSlider(slider);
                     slider.addEventListener("mousemove", function () { updateSlider(slider) });
                     slider.addEventListener("click", function () { updateSlider(slider) });
+                    slider.addEventListener("touchmove", function() {updateSlider(slider)}); // Mobile
                 });
 
                 // Event handler for skillset sliders
@@ -165,6 +167,7 @@ const sidebar = {
         var label = document.querySelector("#filter-search #price-selected");
         slider.addEventListener("mousemove", function () { updateSlider(slider, label) });
         slider.addEventListener("click", function () { updateSlider(slider, label) });
+        slider.addEventListener("touchmove", function() {updateSlider(slider, label)}); // Mobile
 
         function updateSlider(slider, label) {
             // Update slider colors
@@ -214,16 +217,17 @@ const sidebar = {
         });
         // Make server request, passing the updated search filter object
         apiRequest.getDevelopers(this.searchFilter);
+        this.onResize();
     },
     requestLogout: function () {
         if (demoMode.isOn) {
             demoMode.end();
-            this.viewAdapt("not-logged-in");
+            clientManager.viewAdapt("not-logged-in");
             sidebar.onResize(); 
         } else {
             apiRequest.logout();
         }
-        
+        this.onResize();
     }
 };
 
@@ -353,11 +357,12 @@ const demoMode = {
         popup.display("Demo mode started",
             ["Explore the view when logged in as a software developer.",
                 "API access is limited in demo mode."]);
-        apiRequest.getDevelopers();
+        apiRequest.getDevelopers(sidebar.searchFilter);
     },
     end: function () {
         this.isOn = false;
         $("#main-wrapper").removeClass("demo-mode");
+        clientManager.logoutSuccessful();
         popup.display("Demo mode ended", ["Continue to browse developers, or create an account."]);
     }
 };
