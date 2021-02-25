@@ -434,30 +434,6 @@ input[type=number] {
     padding-left: 300px;
 }
 
-/*EXAMPLE CARD*/
-.card-test {
-    width: 400px;
-    min-height: 200px;
-    margin: 20px;
-    background-color: white;
-    border-radius: 12px;
-}
-
-.card-test .card-header {
-    width: -webkit-fill-available;
-
-    border-radius: 12px 12px 0 0;
-    
-    padding: 12px;
-    /* background-color: var(--theme-main); */
-    background-color:var(--theme-main); 
-    color: white;
-}
-
-.card-test .card-content {
-    padding: 20px;
-}
-
 /*______________________ POP-UP ________________________*/
 
 #popup-container {
@@ -603,7 +579,7 @@ a:hover {
 }
 
 /* Google Chrome */
-.slider::-webkit-slider-thumb { 
+.slider::-webkit-slider-thumb {
     visibility: hidden;
 }
 /* Mozilla Firefox */

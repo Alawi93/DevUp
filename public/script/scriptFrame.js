@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#main-wrapper").addClass("not-logged-in"); // Remove for dev purposes
-    apiRequest.getSkillSets();
+    // apiRequest.getSkillSets();
     sidebar.init();
 });
 
@@ -33,8 +33,6 @@ const sidebar = {
     },
     init: function () { // Initialize sidebar at page load
         this.onResize();
-        // Load available skillset from server
-        apiRequest.getSkillSets();
         // Initialize search filter object
         this.searchFilter =
         {
@@ -43,6 +41,9 @@ const sidebar = {
             name_start: "",
             price_max:10000
         };
+        // Load available skillset from server
+        apiRequest.getSkillSets();
+        
         // Event handler for submit profile changes
         $("#profile-form").on("submit", function (event) {
             event.preventDefault(); // Prevent redirect or reload, but still validate form fields.
