@@ -5,10 +5,30 @@ const User = require('../models/user');
 const memCont = require('../controller/memberController');
 mongoose.set('useFindAndModify', false);
 
+
+//https://localhost/api/member/delete
+router.delete('/', function (req, res) {
+    let filter = { email: req.body.email };
+    User.findOneAndDelete(filter, function (err, docs) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({
+                message: { body: "Internal Server Error, please try again later!" },
+                statusCode: res.statusCode,
+            });
+        }
+        else {
+            res.status(200).send({
+                message: { body: "Delete Complete." },
+                statusCode: res.statusCode,
+            });
+        }
+    });
+
+});
+
 //https://localhost/api/member
 router.put('/', function (req, res) { //update
-    // req.body = json objekt    
-    // compare hashed passwords
 
     let filter = { email: req.body.email };
     let clientUpdate = {
@@ -35,21 +55,17 @@ router.put('/', function (req, res) { //update
                 statusCode: res.statusCode,
             });
         } else {
-
             res.status(200).send({
                 message: { body: "User Sucessfully Updated." },
                 statusCode: res.statusCode,
                 dbUserData,
             });
         }
-
     });
 });
 
-
 //https://localhost/api/member/ban
 router.put('/ban', function (req, res) { //update
-    console.log(req.body)
     let filter = { email: req.body.email };
     let banUpdate = { isBanned: req.body.ban }
 
@@ -61,12 +77,17 @@ router.put('/ban', function (req, res) { //update
                 statusCode: res.statusCode,
             });
         } else {
-
-            res.status(200).send({
-                message: { body: "User Sucessfully Banned." },
-                statusCode: res.statusCode,
-                dbUserData,
-            });
+            if (req.body.ban == 'true') {
+                res.status(200).send({
+                    message: { body: "User Sucessfully Banned." },
+                    statusCode: res.statusCode,
+                });
+            } else {
+                res.status(200).send({
+                    message: { body: "User Sucessfully Unbanned." },
+                    statusCode: res.statusCode,
+                });
+            }
         }
 
     });
@@ -99,14 +120,22 @@ router.post('/login', function (req, res) {
                     statusCode: res.statusCode,
                 });
             } else {
+                if (dbUserData.isAdmin) {
+                    let user = memCont.createAdminObject(dbUserData);
+                    res.status(200).send({
+                        message: { body: "Login successfully ADMIN." },
+                        statusCode: res.statusCode,
+                        user,
+                    });
+                } else {
+                    let user = memCont.createClientObject(dbUserData);
 
-                let user = memCont.createClientObject(dbUserData)
-
-                res.status(200).send({
-                    message: { body: "Login successfully." },
-                    statusCode: res.statusCode,
-                    user,
-                });
+                    res.status(200).send({
+                        message: { body: "Login successfully." },
+                        statusCode: res.statusCode,
+                        user,
+                    });
+                }
             }
         });
 
@@ -132,19 +161,10 @@ router.post('/register', function (req, res) { // hashing salt
                 statusCode: res.statusCode,
             });
         } else {
+
             const user = new User({
                 password: req.body.password,
-                isAdmin: false,
                 email: req.body.email,
-                professionLabel: req.body.professionLabel,
-                age: req.body.age,
-                country: req.body.country,
-                yearsExperience: req.body.yearsExperience,
-                profilePictPath: req.body.profilePictPath,
-                pricePerHour: req.body.pricePerHour,
-                memberSince: Date.now(),
-                selfDescription: req.body.selfDescription,
-                skillset: req.body.skillset
             });
 
             user.save(function (err, doc) {
@@ -166,10 +186,12 @@ router.post('/register', function (req, res) { // hashing salt
     });
 });
 
-
-
 router.get('/logout', function (req, res) {
     //redirect to root route /
+    res.status(200).send({
+        message: { body: "Log Out successfully." },
+        statusCode: res.statusCode,
+    });
 });
 
 
