@@ -26,12 +26,27 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    name: String,
-    professionLabel: String,
+    name: {
+        type:String,
+        default: null,
+    },
+    professionLabel: {
+        type:String,
+        default: null,
+    },
     age: Number,
-    country: String,
-    yearsExperience: Number,
-    pricePerHour: Number,
+    country: {
+        type:String,
+        default: null,
+    },
+    yearsExperience: {
+        type:Number,
+        default: null,
+    },
+    pricePerHour: {
+        type:Number,
+        default: null,
+    },
     github:{
         type:String,
         default: "https://github.com/"
@@ -44,7 +59,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
-    selfDescription: String,
+    selfDescription: {
+        type:String,
+        default: null,
+    },
     isBanned: {
         type: Boolean,
         default: false,
