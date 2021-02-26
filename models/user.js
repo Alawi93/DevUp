@@ -10,7 +10,7 @@ var validateEmail = function(email) {
 const userSchema = new mongoose.Schema({
     _id: {
         type: mongoose.Types.ObjectId,
-        default: mongoose.Types.ObjectId(),
+        default: new mongoose.Types.ObjectId(),
     },
     email: {
         type: String,

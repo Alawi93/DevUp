@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({
 app.use("/api/developers",developer);
 app.use("/api/member",member);
 app.use(middleware.incomingRequest);
+//app.use(session({secret: process.env.SECRETS,resave:false,saveUninitialized: true}))
 //root route
 app.get("/",function(req,res){
 //res.sendFile()
