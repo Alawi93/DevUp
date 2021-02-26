@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     _id: {
         type: mongoose.Types.ObjectId,
         default: new mongoose.Types.ObjectId(),
+        auto: true
     },
     email: {
         type: String,
@@ -70,6 +71,7 @@ const userSchema = new mongoose.Schema({
     skillset: [{
         skillName: String,
         skillRate: Number,
+        default: [{}]
     }]
 });
 
