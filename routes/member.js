@@ -198,6 +198,7 @@ router.post('/register', function (req, res) { // hashing salt
                     });
                 }
                 console.log('Was successfully saved');
+                req.session.user = user.email;
             return res.status(200).json({
                     message: { body: `User ${req.body.email} was successfully created.` },
                     statusCode: res.statusCode,
