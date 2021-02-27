@@ -123,7 +123,6 @@ router.post('/login', function (req, res) {
                     message: { body:"Internal Server Error, please try again later!" },
                     statusCode: res.statusCode,
                 });
-                
             }
 
             if (!isMatch) {
@@ -151,7 +150,8 @@ router.post('/login', function (req, res) {
                    
                 } else {
                     let user = memCont.createClientObject(dbUserData);
-                   
+                    req.session.user = user.email;
+                    console.log(req.session)
                     return res.status(200).send({
                         message: { body: "Login successfully." },
                         statusCode: res.statusCode,
@@ -188,7 +188,7 @@ router.post('/register', function (req, res) { // hashing salt
                 password: req.body.password,
                 email: req.body.email,
             });
-
+            
             user.save(function (err, doc) {
                 if (err) {
                     console.log('err' + err);
@@ -209,15 +209,44 @@ router.post('/register', function (req, res) { // hashing salt
 });
 
 router.get('/logout', function (req, res) {
-    //redirect to root route /
-    return res.status(200).send({
-        message: { body: "Log Out successfully." },
-        statusCode: res.statusCode,
-    });
+    if(req.session.user){
+        var currentUser = req.session.user;
+        req.session.destroy(function(err){
+            if(err){
+                return res.status(500).send({
+                    message: { body: "Internal Server Error, Session was not destroyed, please try again later!" },
+                    statusCode: res.statusCode,
+                });
+            } 
+                return res.status(200).send({
+                    message: { body: `The user ${currentUser}, succesfully logged out` },
+                    statusCode: res.statusCode,
+                });
+           
+        })
+    }else{
+        return res.status(404).send({
+            message: { body: "There is no user currently logged in user to logout!" },
+            statusCode: res.statusCode,
+        });
+    }
+   
 });
 
 
 router.get('/isloggedin', function (req, res) {
-    //redirect to root route /
+   if(!req.session.user){
+    return res.status(401).json({
+        message: { body: 'The user is not currently logged in!' },
+        statusCode: res.statusCode,
+        
+    }); 
+   }else{
+    return res.status(200).json({
+        message: { body: `The user ${req.session.user} is currently logged in!` },
+        statusCode: res.statusCode,
+        
+    }); 
+   }
 });
 module.exports = router;
