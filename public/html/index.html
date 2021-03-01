@@ -126,7 +126,7 @@
                                 <input type="text" id="filter-name"><br>
                                 <p class="title">Max price per hour ($)</p>
                                 <label for="filter-price" id="price-selected"></label>
-                                <input type="range" id="filter-price" class="slider" min="0" max="100" value="50">
+                                <input type="range" id="filter-price" class="slider" min="0" max="100" value="100">
                                 <p class="title">Skillset</p>
                                 <div id="filter-skills"></div> <!-- Injection point for skills provided by server -->
                                 <div id="search-submit">
@@ -145,7 +145,17 @@
                     </button>
                     <div class="dropdownable">
                         <div class="dropdown-inner">
-                            <p>Stuf</p>
+                            <form autocomplete="off" id="admin-form">
+                                <p style="color:whote; margin-bottom: 12px;">Create new user</p>
+                                <p class="title">Email</p>
+                                <input type="text" id="admin-add-email" required="required"><br>
+                                <p class="title">Password</p>
+                                <input type="text" id="admin-add-pwd" required="required"><br>
+                                <div id="admin-add-submit">
+                                    <!-- Evetlistener setup in 'sidebar.init()' -->
+                                    <input type=submit value="Submit" class="btn-floating">
+                                </div>        
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -183,9 +193,9 @@
             <div id="content">
                 <!-- Injection point for dynamically rendered content-->
 
-                <div class="card-test shadow">
-                    <p class="card-header">Welcome!</p>
-                    <div class="card-content">
+                <div id="welcome-card" class="card-test shadow">
+                    <p class="welcome-header">Welcome!</p>
+                    <div class="welcome-content">
                         <p>DevUp is a convenient market place for software developers.</p><br>
                         <p>Browse developers, or create a developer account to get started.</p><br>
                         <p>New here? Try the <a href="javascript:demoMode.start();"> developer demo</a></p><br>

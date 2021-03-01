@@ -25,26 +25,26 @@ router.post('/',function(req,res){
                ...filter
              },filterResult,function(err,user){ 
         if(err){
-            res.status(500).json({
+            return res.status(500).json({
                 message: { body: "Internal Server Error, please try again later!" },
                 statusCode: res.statusCode,
             });
-            return;
+            
          }
          if(!user.length){
-            res.status(404).json({
+            return  res.status(404).json({
                 message: { body: `No users matching that criteria.` },
                 statusCode: res.statusCode,
                 user,
             });
-            return;
+            
          }
-         res.status(200).json({
+         return res.status(200).json({
             message: { body: `Filtered users were  successfully retrieved.` },
             statusCode: res.statusCode,
             user,
         });
-       return;
+       
     }).limit(100);
 });
 
@@ -52,12 +52,12 @@ router.post('/',function(req,res){
 router.get('/skillsets',function(req,res){
     Utils.find({},'skillsets -_id',function(err,utils){
      if(err){
-        res.status(500).json({
+      return  res.status(500).json({
             message: { body: "Internal Server Error, please try again later!" },
             statusCode: res.statusCode,
         });
      } 
-      res.status(200).json({
+    return  res.status(200).json({
                     message: { body: `Filtered Utils was successfully retrieved.` },
                     statusCode: res.statusCode,
                     utils,

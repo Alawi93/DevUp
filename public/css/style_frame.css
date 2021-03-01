@@ -138,7 +138,7 @@ body {
     background-color: white;
     border-radius: 0 0 12px 12px;
     width: 250px;
-    height: 165px;
+    height: 190px;
     top: -140px;
     padding: 12px;
     right: 50px;
@@ -405,6 +405,10 @@ input[type=number] {
     margin-top: -35px;
 }
 
+#sidebar #admin-tools #admin-add-submit {
+    margin-top: 5px;
+}
+
 /*_____________________ CONTENT ______________________*/
 
 #content {
@@ -434,8 +438,7 @@ input[type=number] {
     padding-left: 300px;
 }
 
-/*EXAMPLE CARD*/
-.card-test {
+#welcome-card {
     width: 400px;
     min-height: 200px;
     margin: 20px;
@@ -443,18 +446,16 @@ input[type=number] {
     border-radius: 12px;
 }
 
-.card-test .card-header {
+#welcome-card .welcome-header {
     width: -webkit-fill-available;
-
     border-radius: 12px 12px 0 0;
-    
     padding: 12px;
     /* background-color: var(--theme-main); */
     background-color:var(--theme-main); 
     color: white;
 }
 
-.card-test .card-content {
+#welcome-card .welcome-content {
     padding: 20px;
 }
 
@@ -603,8 +604,7 @@ a:hover {
 }
 
 /* Google Chrome */
-.slider::-webkit-slider-thumb,
-.slider::-moz-range-thumb { 
+.slider::-webkit-slider-thumb { 
     visibility: hidden;
 }
 /* Mozilla Firefox */
