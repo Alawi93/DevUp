@@ -49,6 +49,7 @@ const apiRequest = {
         sidebar.setSearchSection();
     },
     register: function (email, pwd) {
+        popup.display("Developer added", [email, pwd]) // TEMP
         // $.ajax({
         //     type: "POST",
         //     url: "/api/member/register",
@@ -56,7 +57,14 @@ const apiRequest = {
         //     data: JSON.stringify({email, pwd}), // -> {"email":"bla", "pwd": "blu"}
         //     success: function (response) {
         //         // Response = Client object
+        //         if(clientManager.client.isAdmin) {
+        //             popup.display("Developer added successfully", ["email"]);
+        //         } else {
+        //             // Make logged in directly
         //         clientManager.setClient(response.ffff); ???
+        //         }
+        //         // Refresh body content
+        //         sidebar.requestDevelopers();
         //     },
         //     error: function (response) {
         //         handleError(response); ????

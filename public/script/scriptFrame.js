@@ -54,6 +54,11 @@ const sidebar = {
             event.preventDefault(); 
             sidebar.requestDevelopers();
         });
+        // Event handler for submit create developer (admin)
+        $("#admin-form").on("submit", function (event) {
+            event.preventDefault(); 
+            sidebar.adminAddDevloper();
+        });
 
     },
     toggleMenu: function () {
@@ -215,9 +220,20 @@ const sidebar = {
                 sidebar.searchFilter.skills.push(skill);
             };
         });
-        // Make server request, passing the updated search filter object
+        // API request, passing the updated search filter object
         apiRequest.getDevelopers(this.searchFilter);
         this.onResize();
+    },
+    adminAddDevloper: function() {
+        // Fetch data
+        const email = $("#admin-tools").find("#admin-add-email").val();
+        const pwd = $("#admin-tools").find("#admin-add-pwd").val();
+        // Empty input fields
+        $("#admin-tools").find("#admin-add-email").val("");
+        $("#admin-tools").find("#admin-add-pwd").val("");
+        // API request
+        apiRequest.register(email, pwd);
+        sidebar.onResize();
     },
     requestLogout: function () {
         if (demoMode.isOn) {
@@ -265,13 +281,19 @@ const signIn = {  // Drop down from header
         this.signInDisplayed = false;
     },
     submit: function () {
+        // Fetch data
         const email = $("#sign-in-header").find("#input-mail").val();
         const pwd = $("#sign-in-header").find("#input-pwd").val();
+        // Clear input fields
+        $("#sign-in-header").find("#input-mail").empty();
+        $("#sign-in-header").find("#input-pwd").empty();
+        // API request
         if (this.approach == "login") {
             apiRequest.login(email, pwd);
         } else {
             apiRequest.register(email, pwd);
         }
+        // Adapt view
         this.hideSignIn();
         sidebar.onResize();
     }
