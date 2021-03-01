@@ -7,6 +7,7 @@ const developer    = require('./routes/developer');
 const member       = require('./routes/member');
 const path         = require("path");
 const middleware   = require('./middleware/middleware');  
+const session      = require('express-session')
 require('dotenv').config()
 
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
 }));
+app.use(session({secret: process.env.SECRETS,resave:false,saveUninitialized: true}))
 app.use("/api/developers",developer);
 app.use("/api/member",member);
 app.use(middleware.incomingRequest);

@@ -35,6 +35,17 @@ function userExist(loginData, res) {
     });
 }
 
+
+function createAdminObject(user){
+    let returnUser = {
+        _id: user._id,
+        password: user.password,
+        isAdmin: user.isAdmin,
+        email: user.email,
+    };
+    return returnUser;
+}
+
 function createClientObject(user){
     let returnUser = {
         _id: user._id,
@@ -63,4 +74,5 @@ function createClientObject(user){
 module.exports = {
     isBanned: isBanned,
     createClientObject: createClientObject,
+    createAdminObject: createAdminObject,
 }
