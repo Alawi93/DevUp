@@ -135,6 +135,7 @@ const apiRequest = {
         //     success: function () {
         //         // Proceed to set ban in GUI
         //         // maybe reolad all developers from the list to the body?
+        //            Call method in scriptContent?
         //     },
         //     error: function (response) {
         //         handleError(response); ????

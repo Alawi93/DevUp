@@ -75,10 +75,15 @@
     background-color:var(--theme-main);
 }
 
+.adminContent {
+    display: flex;
+    justify-content: end;
+}
+
 .adminBtn {
     font-size: 20px;
     align-self: flex-end;
-    margin: 10px;
+    margin: 10px 10px 10px 0px;
     padding: 0px;
     visibility: hidden;
     text-decoration: none;
