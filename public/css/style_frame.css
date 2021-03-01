@@ -405,6 +405,10 @@ input[type=number] {
     margin-top: -35px;
 }
 
+#sidebar #admin-tools #admin-add-submit {
+    margin-top: 5px;
+}
+
 /*_____________________ CONTENT ______________________*/
 
 #content {
@@ -432,6 +436,27 @@ input[type=number] {
 /* Sidebar display: Big screen */
 #main-wrapper.big-screen.menu-displayed  #content {
     padding-left: 300px;
+}
+
+#welcome-card {
+    width: 400px;
+    min-height: 200px;
+    margin: 20px;
+    background-color: white;
+    border-radius: 12px;
+}
+
+#welcome-card .welcome-header {
+    width: -webkit-fill-available;
+    border-radius: 12px 12px 0 0;
+    padding: 12px;
+    /* background-color: var(--theme-main); */
+    background-color:var(--theme-main); 
+    color: white;
+}
+
+#welcome-card .welcome-content {
+    padding: 20px;
 }
 
 /*______________________ POP-UP ________________________*/
