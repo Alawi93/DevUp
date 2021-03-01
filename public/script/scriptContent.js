@@ -110,11 +110,11 @@ const demoUsers = [{
         { skillName: "MySql", skillRate: 6 }]
 }];
 
-function refreshContent() {
+function refreshContent(users) {
     var cardsContainer = document.getElementById('content');
     cardsContainer.innerHTML = '';
 
-    demoUsers.forEach(user => {
+    users.forEach(user => {
         if(!user.isDeleted){
             var banBtn = '';
             var cardState = '';
@@ -179,9 +179,7 @@ function requestBan(email) {
 
 function requestDelete(email) {
     //No true/false when deleting, one should only be able to delete the user and not add back him from the GUI.
-    //If want to add back then contact support and they will handle through the DB.
     apiRequest.setDelete(email);
-
 }
 
 function setDeleteCard() {
