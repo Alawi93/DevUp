@@ -19,7 +19,7 @@ router.delete('/', function (req, res) {
             });
         }
         else {
-            return  res.status(200).send({
+            return  res.status(200).json({
                 message: { body: "Delete Complete." },
                 statusCode: res.statusCode,
             });
@@ -56,7 +56,7 @@ router.put('/', function (req, res) { //update
                 statusCode: res.statusCode,
             });
         } else {
-            return  res.status(200).send({
+            return  res.status(200).json({
                 message: { body: "User Sucessfully Updated." },
                 statusCode: res.statusCode,
                 dbUserData,
@@ -80,12 +80,12 @@ router.put('/ban', function (req, res) { //update
             });
         } else {
             if (req.body.ban == 'true') {
-                return res.status(200).send({
+                return res.status(200).json({
                     message: { body: "User Sucessfully Banned." },
                     statusCode: res.statusCode,
                 });
             } else {
-                return  res.status(200).send({
+                return  res.status(200).json({
                     message: { body: "User Sucessfully Unbanned." },
                     statusCode: res.statusCode,
                 });
@@ -142,7 +142,7 @@ router.post('/login', function (req, res) {
             } else {
                 if (dbUserData.isAdmin) {
                     let user = memCont.createAdminObject(dbUserData);
-                    return  res.status(200).send({
+                    return  res.status(200).json({
                         message: { body: "Login successfully ADMIN." },
                         statusCode: res.statusCode,
                         user,
@@ -152,7 +152,7 @@ router.post('/login', function (req, res) {
                     let user = memCont.createClientObject(dbUserData);
                     req.session.user = user.email;
                     console.log(req.session)
-                    return res.status(200).send({
+                    return res.status(200).json({
                         message: { body: "Login successfully." },
                         statusCode: res.statusCode,
                         user,
@@ -214,20 +214,20 @@ router.get('/logout', function (req, res) {
         var currentUser = req.session.user;
         req.session.destroy(function(err){
             if(err){
-                return res.status(500).send({
+                return res.status(500).json({
                     message: { body: "Internal Server Error, Session was not destroyed, please try again later!" },
                     statusCode: res.statusCode,
                 });
             } 
-                return res.status(200).send({
+                return res.status(200).json({
                     message: { body: `The user ${currentUser}, succesfully logged out` },
                     statusCode: res.statusCode,
                 });
            
         })
     }else{
-        return res.status(404).send({
-            message: { body: "There is no user currently logged in user to logout!" },
+        return res.status(404).json({
+            message: { body: "There is no user currently logged in!" },
             statusCode: res.statusCode,
         });
     }
