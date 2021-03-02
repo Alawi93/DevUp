@@ -15,7 +15,7 @@ require('dotenv').config()
 //connect to database                        
 mongoose.connect(process.env.DATABASE_LINK,{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname,"views")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
