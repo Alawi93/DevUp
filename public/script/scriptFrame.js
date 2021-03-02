@@ -2,6 +2,7 @@ $(document).ready(function () {
     $("#main-wrapper").addClass("not-logged-in"); // Remove for dev purposes
     // apiRequest.getSkillSets();
     sidebar.init();
+    apiRequest.tryAutoLogin();
 });
 
 $(window).resize(function () {
