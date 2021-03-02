@@ -9,15 +9,8 @@ const apiRequest = {
             contentType: "application/json",
             data: JSON.stringify(filter),
             success: function (response) {
-
-                console.log("JSON stringify: " + (JSON.stringify(filter)));
-
-
-
                 // Response = Array of developers, based on filter request
                 // Clear content body and rebuild
-                console.log(response.user);
-                //const users = JSON.parse(response.user);
                 const users = response.user;
                 refreshContent(users);
             },
@@ -38,8 +31,6 @@ const apiRequest = {
             success: function (response) {
                 // Response = Array of available skillsets 
                 // to search on and include in profile
-                console.log(response);
-                //sidebar.availableSkills = response.skillset;
                 sidebar.availableSkills = tempSkillsets;
                 sidebar.setProfileSection();
                 sidebar.setSearchSection();
@@ -73,18 +64,18 @@ const apiRequest = {
         // });
     },
     tryAutoLogin: function () {
-        // $.ajax({
-        //     type: "GET",
-        //     url: "/api/member/isloggedin",
-        //     dataType: "json",
-        //     success: function (response) {
-        //         // Response = Client object
-        //         clientManager.loginSuccessful(response.ffff); ???
-        //     },
-        //     error: function (response) {
-        //         handleError(response); ????
-        //     }
-        // });
+        $.ajax({
+            type: "GET",
+            url: "/api/member/isloggedin",
+            dataType: "json",
+            success: function (response) {
+                // Response = Client object
+                clientManager.loginSuccessful(response.user);
+            },
+            error: function (response) {
+                handleError(response);
+            }
+        });
     },
     login: function (email, password) {
         $.ajax({
@@ -95,11 +86,9 @@ const apiRequest = {
             data: JSON.stringify({email, password}),
             success: function (response) {
                 // Response = Client object
-                console.log(response.user);
                 clientManager.loginSuccessful(response.user);
             },
             error: function (response) {
-                console.log(response);
                 handleError(response);
             }
         });
