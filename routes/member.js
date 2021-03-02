@@ -79,7 +79,7 @@ router.put('/ban', function (req, res) { //update
                 statusCode: res.statusCode,
             });
         } else {
-            if (req.body.ban == 'true') {
+            if (req.body.ban == true) {
                 return res.status(200).json({
                     message: { body: "User Sucessfully Banned." },
                     statusCode: res.statusCode,
@@ -100,11 +100,14 @@ router.post('/login', function (req, res) {
     let filter = { email: req.body.email };
     let pwd = req.body.password;
 
+    console.log(req.body.email);
+    console.log(req.body.password);
+
     User.findOne(filter, function (err, dbUserData) {
         if (err) {
             console.log(err);
             return  res.status(500).json({
-                message: { body: "Internal Server Error, please try again later!" },
+                message: { body: "Internal Server Error, please try again later! (1)" },
                 statusCode: res.statusCode,
             });
             
@@ -120,7 +123,7 @@ router.post('/login', function (req, res) {
         dbUserData.comparePassword(pwd, function (err, isMatch) {
             if(err){
                 return  res.status(500).json({
-                    message: { body:"Internal Server Error, please try again later!" },
+                    message: { body:"Internal Server Error, please try again later! (2)" },
                     statusCode: res.statusCode,
                 });
             }
