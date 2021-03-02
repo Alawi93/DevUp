@@ -6,7 +6,7 @@ const memCont = require('../controller/memberController');
 mongoose.set('useFindAndModify', false);
 
 
-//https://localhost/api/member/delete
+//https://localhost/api/member
 router.delete('/', function (req, res) {
   
     let filter = { email: req.body.email };
@@ -18,12 +18,18 @@ router.delete('/', function (req, res) {
                 statusCode: res.statusCode,
             });
         }
-        else {
-            return  res.status(200).json({
-                message: { body: "Delete Complete." },
+        if(!docs){
+            return  res.status(404).json({
+                message: { body:`The user ${req.body.email} does not exist in the database.`},
                 statusCode: res.statusCode,
             });
         }
+       
+             return  res.status(200).json({
+                message: { body: `The user ${req.body.email} was successfully deleted.` },
+                statusCode: res.statusCode,
+        });
+        
     });
 
 });
@@ -55,13 +61,19 @@ router.put('/', function (req, res) { //update
                 message: { body: "Internal Server Error, please try again later!" },
                 statusCode: res.statusCode,
             });
-        } else {
+        }
+
+        if(!dbUserData){
+            return  res.status(404).json({
+                message: { body:`The user '${req.body.email}' does not exist in the database.`},
+                statusCode: res.statusCode,
+            });
+        }    
             return  res.status(200).json({
-                message: { body: "User Sucessfully Updated." },
+                message: { body: `The user '${req.body.email}' was successfully updated.` },
                 statusCode: res.statusCode,
                 dbUserData,
             });
-        }
     });
 });
 
@@ -78,20 +90,25 @@ router.put('/ban', function (req, res) { //update
                 message: { body: "Internal Server Error, please try again later!" },
                 statusCode: res.statusCode,
             });
-        } else {
+        }
+            if(!dbUserData){
+                return  res.status(404).json({
+                    message: { body:`The user '${req.body.email}' does not exist in the database.`},
+                    statusCode: res.statusCode,
+                });
+            } 
+
             if (req.body.ban == true) {
                 return res.status(200).json({
-                    message: { body: "User Sucessfully Banned." },
+                    message: { body: `The user '${req.body.email}' was successfully banned.` },
                     statusCode: res.statusCode,
                 });
             } else {
                 return  res.status(200).json({
-                    message: { body: "User Sucessfully Unbanned." },
+                    message: { body: `The user '${req.body.email}' was successfully unbanned.` },
                     statusCode: res.statusCode,
                 });
             }
-        }
-
     });
 });
 
@@ -107,7 +124,7 @@ router.post('/login', function (req, res) {
         if (err) {
             console.log(err);
             return  res.status(500).json({
-                message: { body: "Internal Server Error, please try again later! (1)" },
+                message: { body: "Internal Server Error, could not search database. Please try again later!" },
                 statusCode: res.statusCode,
             });
             
@@ -123,14 +140,14 @@ router.post('/login', function (req, res) {
         dbUserData.comparePassword(pwd, function (err, isMatch) {
             if(err){
                 return  res.status(500).json({
-                    message: { body:"Internal Server Error, please try again later! (2)" },
+                    message: { body:"Internal Server Error, could not confirm passwords. Please try again later!" },
                     statusCode: res.statusCode,
                 });
             }
 
             if (!isMatch) {
                 return  res.status(403).json({
-                    message: { body: "User exist but password does not match." },
+                    message: { body:`The user '${req.body.email}' exists but the password does not match!` },
                     statusCode: res.statusCode,
                 });
                
@@ -138,7 +155,7 @@ router.post('/login', function (req, res) {
             let userBan = dbUserData.isBanned;
             if (userBan) {
                 return  res.status(403).json({
-                    message: { body: "User is BANNED!." },
+                    message: { body: `The user '${req.body.email}' is banned!` },
                     statusCode: res.statusCode,
                 });
                
@@ -146,7 +163,7 @@ router.post('/login', function (req, res) {
                 if (dbUserData.isAdmin) {
                     let user = memCont.createAdminObject(dbUserData);
                     return  res.status(200).json({
-                        message: { body: "Login successfully ADMIN." },
+                        message: { body: "Logged in successfully as an admin" },
                         statusCode: res.statusCode,
                         user,
                     });
@@ -156,7 +173,7 @@ router.post('/login', function (req, res) {
                     req.session.user = user.email;
                     console.log(req.session)
                     return res.status(200).json({
-                        message: { body: "Login successfully." },
+                        message: { body: "Logged in successfully." },
                         statusCode: res.statusCode,
                         user,
                     });
@@ -176,13 +193,13 @@ router.post('/register', function (req, res) { // hashing salt
         if (err) {
             console.log(err);
            return res.status(500).json({
-                message: { body: "Internal Server Error, please try again later!" },
+                message: { body: "Internal Server Error, could not search database. Please try again later!" },
                 statusCode: res.statusCode,
             });
         }
         if (user) {
             return res.status(400).json({
-                message: { body: "The username is already taken!" },
+                message: { body: `The username '${req.body.email}' is already taken!` },
                 statusCode: res.statusCode,
             });
         } else {
@@ -196,14 +213,14 @@ router.post('/register', function (req, res) { // hashing salt
                 if (err) {
                     console.log('err' + err);
             return res.status(500).json({
-                        message: { body: "Internal Server Error, please try again later!" },
+                        message: { body: "Internal Server Error, could not save user. Please try again later!" },
                         statusCode: res.statusCode,
                     });
                 }
                 console.log('Was successfully saved');
                 req.session.user = user.email;
             return res.status(200).json({
-                    message: { body: `User ${req.body.email} was successfully created.` },
+                    message: { body: `The user '${req.body.email}' was successfully created.` },
                     statusCode: res.statusCode,
                     user,
                 });
@@ -224,7 +241,7 @@ router.get('/logout', function (req, res) {
                 });
             } 
                 return res.status(200).json({
-                    message: { body: `The user ${currentUser}, succesfully logged out` },
+                    message: { body: `The user '${currentUser}', succesfully logged out` },
                     statusCode: res.statusCode,
                 });
            
@@ -252,21 +269,21 @@ router.get('/isloggedin', function (req, res) {
         if (err) {
             console.log(err);
            return res.status(500).json({
-                message: { body: "Internal Server Error, please try again later!" },
+                message: { body: "Internal Server Error, could not search database. Please try again later!" },
                 statusCode: res.statusCode,
             });
         }
 
         if(!user){
             return  res.status(404).json({
-                message: { body:"The user does not exist in the database" },
+                message: { body:`The user ${req.session.user} does not exist in the database!` },
                 statusCode: res.statusCode,
             });
         }
 
         if (user) {
             return res.status(200).json({
-                message: { body: `The user ${req.session.user} is currently logged in!` },
+                message: { body: `The user ${req.session.user} is currently logged in.` },
                 statusCode: res.statusCode,
                 user
             });
