@@ -79,7 +79,7 @@ router.put('/ban', function (req, res) { //update
                 statusCode: res.statusCode,
             });
         } else {
-            if (req.body.ban == 'true') {
+            if (req.body.ban == true) {
                 return res.status(200).json({
                     message: { body: "User Sucessfully Banned." },
                     statusCode: res.statusCode,
