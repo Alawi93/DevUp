@@ -119,6 +119,7 @@ function refreshContent(users) {
     users.forEach(user => {
         if (!user.isDeleted) {
             var banBtn = '';
+            var deleteBtn = '';
             var cardState = '';
             var skills = user.skillset;
             var skillsHtmlString = '';
