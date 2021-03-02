@@ -18,7 +18,6 @@ const apiRequest = {
                 handleError(response);
                 const users = response.user;
                 refreshContent(users);
-
             }
         });
     },
