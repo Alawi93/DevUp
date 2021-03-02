@@ -1,5 +1,6 @@
 const apiRequest = {
-    getDevelopers: function (filter) {
+    getDevelopers: function (filterccc) {
+        const filter = sidebar.searchFilter;
         console.log(filter);
         $.ajax({
             type: "POST",
@@ -8,6 +9,11 @@ const apiRequest = {
             contentType: "application/json",
             data: JSON.stringify(filter),
             success: function (response) {
+
+                console.log("JSON stringify: " + (JSON.stringify(filter)));
+
+
+
                 // Response = Array of developers, based on filter request
                 // Clear content body and rebuild
                 console.log(response.user);
@@ -15,8 +21,11 @@ const apiRequest = {
                 const users = response.user;
                 refreshContent(users);
             },
-            error: function (response) {    
+            error: function (response) { 
                 handleError(response);
+                const users = response.user;
+                refreshContent(users);
+                
             }
         });
     },
@@ -77,17 +86,17 @@ const apiRequest = {
         //     }
         // });
     },
-    login: function (email, pwd) {
+    login: function (email, password) {
         $.ajax({
             type: "POST",
             url: "/api/member/login",
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify({email, pwd}),
+            data: JSON.stringify({email, password}),
             success: function (response) {
                 // Response = Client object
-                console.log(response);
-                clientManager.loginSuccessful(response.ffff);
+                console.log(response.user);
+                clientManager.loginSuccessful(response.user);
             },
             error: function (response) {
                 console.log(response);
@@ -137,7 +146,7 @@ const apiRequest = {
             contentType: "application/json",
             data: JSON.stringify({ban, email}),
             success: function () {
-                apiRequest.getDevelopers();
+                apiRequest.getDevelopers(sidebar.searchFilter);
             },
             error: function (response) {
                 handleError(response);
