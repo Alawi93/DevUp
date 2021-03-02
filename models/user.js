@@ -29,24 +29,24 @@ const userSchema = new mongoose.Schema({
     },
     name: {
         type:String,
-        default: null,
+        default: "undefined",
     },
     professionLabel: {
         type:String,
-        default: null,
+        default: "undefined",
     },
     age: Number,
     country: {
         type:String,
-        default: null,
+        default: "undefined",
     },
     yearsExperience: {
         type:Number,
-        default: null,
+        default: 0,
     },
     pricePerHour: {
         type:Number,
-        default: null,
+        default: 1,
     },
     github:{
         type:String,
@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema({
     },
     selfDescription: {
         type:String,
-        default: null,
+        default: "undefined",
     },
     isBanned: {
         type: Boolean,
