@@ -15,6 +15,11 @@ const devCont   = require('../controller/developerController');
 //https://localhost/api/developers
 router.post('/',function(req,res){ 
    var body = req.body;
+
+   console.log("Receive filter object JSON: " + req.body);
+   console.log("Receive filter : " + typeof(req.body.is_admin));
+
+
    var filterResult = 'email password isAdmin name professionLabel age country yearsExperience pricePerHour memberSince selfDescription isBanned skillset' 
    const filter = devCont.searchFilter(body.is_admin,body.skills,body.name_start,body.price_max); 
    const  regex = new RegExp(body.name_start,'i');

@@ -39,7 +39,7 @@ const sidebar = {
             is_admin: false,
             skills: [],
             name_start: "",
-            price_max:10000
+            price_max:500
         };
         // Load available skillset from server
         apiRequest.getSkillSets();
@@ -282,8 +282,8 @@ const signIn = {  // Drop down from header
     },
     submit: function () {
         // Fetch data
-        const email = $("#sign-in-header").find("#input-mail").val();
-        const pwd = $("#sign-in-header").find("#input-pwd").val();
+        const email = $("#sign-in").find("#input-mail").val();
+        const pwd = $("#sign-in").find("#input-pwd").val();
         // Clear input fields
         $("#sign-in-header").find("#input-mail").empty();
         $("#sign-in-header").find("#input-pwd").empty();
@@ -302,8 +302,13 @@ const signIn = {  // Drop down from header
 const clientManager = {
     client: null,
     loginSuccessful: function (client) {
-        this.setClient(client);      
-        this.viewAdapt(client.isAdmin ? "admin" : "developer");
+        this.setClient(client);
+        const isAdmin = client.isAdmin;
+        this.viewAdapt(isAdmin ? "admin" : "developer");
+        if(isAdmin) {
+            sidebar.searchFilter.is_admin = true;            
+        }
+        apiRequest.getDevelopers();
     },
     logoutSuccessful: function() {
         this.client = null;
@@ -312,7 +317,7 @@ const clientManager = {
     setClient: function(client) {
         this.client = client;
         sidebar.setProfileSection();
-        $("#header #label-name").text(this.client.name.toUpperCase());
+        $("#header #label-name").text(client.isAdmin ? "ADMIN" : this.client.name.toUpperCase());
     },
     viewAdapt: function (clientProfile) {
         // Adapt view to type of client
