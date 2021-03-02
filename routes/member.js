@@ -212,6 +212,7 @@ router.post('/register', function (req, res) { // hashing salt
     });
 });
 
+//http://localhost:3000/api/member/login
 router.get('/logout', function (req, res) {
     if(req.session.user){
         var currentUser = req.session.user;
@@ -227,30 +228,49 @@ router.get('/logout', function (req, res) {
                     statusCode: res.statusCode,
                 });
            
-        })
+        });
     }else{
         return res.status(404).json({
             message: { body: "There is no user currently logged in!" },
             statusCode: res.statusCode,
         });
-    }
-   
+    } 
 });
 
-
+//http://localhost:3000/api/member/isloggedin
 router.get('/isloggedin', function (req, res) {
-   if(!req.session.user){
-    return res.status(401).json({
-        message: { body: 'The user is not currently logged in!' },
-        statusCode: res.statusCode,
-        
-    }); 
-   }else{
-    return res.status(200).json({
-        message: { body: `The user ${req.session.user} is currently logged in!` },
-        statusCode: res.statusCode,
-        
-    }); 
-   }
+   var filter = { email: req.session.user };
+
+    if(!req.session.user){
+         return res.status(401).json({
+            message: { body: 'The user is not currently logged in!' },
+            statusCode: res.statusCode,  
+        }); 
+    }
+
+    User.findOne(filter, function (err, user) {
+        if (err) {
+            console.log(err);
+           return res.status(500).json({
+                message: { body: "Internal Server Error, please try again later!" },
+                statusCode: res.statusCode,
+            });
+        }
+
+        if(!user){
+            return  res.status(404).json({
+                message: { body:"The user does not exist in the database" },
+                statusCode: res.statusCode,
+            });
+        }
+
+        if (user) {
+            return res.status(200).json({
+                message: { body: `The user ${req.session.user} is currently logged in!` },
+                statusCode: res.statusCode,
+                user
+            });
+        }
+  });
 });
 module.exports = router;
