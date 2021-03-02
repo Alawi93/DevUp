@@ -318,7 +318,8 @@ const clientManager = {
     setClient: function(client) {
         this.client = client;
         sidebar.setProfileSection();
-        $("#header #label-name").text(client.isAdmin ? "ADMIN" : this.client.name.toUpperCase());
+        const name = this.client.name ? this.client.name.toUpperCase() : "UNDEFINED";
+        $("#header #label-name").text(client.isAdmin ? "ADMIN" : name);
     },
     viewAdapt: function (clientProfile) {
         // Adapt view to type of client

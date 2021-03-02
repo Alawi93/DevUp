@@ -14,11 +14,10 @@ const apiRequest = {
                 const users = response.user;
                 refreshContent(users);
             },
-            error: function (response) { 
+            error: function (response) {
                 handleError(response);
                 const users = response.user;
                 refreshContent(users);
-                
             }
         });
     },
@@ -40,42 +39,44 @@ const apiRequest = {
             }
         });
     },
-    register: function (email, pwd) {
-        popup.display("Developer added", [email, pwd]) // TEMP
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/api/member/register",
-        //     dataType: "json",
-        //     data: JSON.stringify({email, pwd}), // -> {"email":"bla", "pwd": "blu"}
-        //     success: function (response) {
-        //         // Response = Client object
-        //         if(clientManager.client.isAdmin) {
-        //             popup.display("Developer added successfully", ["email"]);
-        //         } else {
-        //             // Make logged in directly
-        //         clientManager.setClient(response.ffff); ???
-        //         }
-        //         // Refresh body content
-        //         sidebar.requestDevelopers();
-        //     },
-        //     error: function (response) {
-        //         handleError(response); ????
-        //     }
-        // });
-    },
-    tryAutoLogin: function () {
+    register: function (email, password) {
         $.ajax({
-            type: "GET",
-            url: "/api/member/isloggedin",
+            type: "POST",
+            url: "/api/member/register",
             dataType: "json",
+            data: JSON.stringify({ email, password }),
+            contentType: "application/json",
             success: function (response) {
                 // Response = Client object
-                clientManager.loginSuccessful(response.user);
+                if (clientManager.client) {
+                    if (clientManager.client.isAdmin) {
+                        popup.display("Developer added successfully", ["email"]);
+                    }
+                } else {
+                    // Make logged in directly
+                    clientManager.setClient(response.user);
+                }
+                // Refresh body content
+                apiRequest.getDevelopers();
             },
             error: function (response) {
                 handleError(response);
             }
         });
+    },
+    tryAutoLogin: function () {
+        // $.ajax({
+        //     type: "GET",
+        //     url: "/api/member/isloggedin",
+        //     dataType: "json",
+        //     success: function (response) {
+        //         // Response = Client object
+        //         clientManager.loginSuccessful(response.ffff); ???
+        //     },
+        //     error: function (response) {
+        //         handleError(response); ????
+        //     }
+        // });
     },
     login: function (email, password) {
         $.ajax({
@@ -83,7 +84,7 @@ const apiRequest = {
             url: "/api/member/login",
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify({email, password}),
+            data: JSON.stringify({ email, password }),
             success: function (response) {
                 // Response = Client object
                 clientManager.loginSuccessful(response.user);
@@ -128,12 +129,12 @@ const apiRequest = {
         };
     },
     setBan: function (ban, email) {
-         $.ajax({
+        $.ajax({
             type: "PUT",
             url: "/api/member/ban",
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify({ban, email}),
+            data: JSON.stringify({ ban, email }),
             success: function () {
                 apiRequest.getDevelopers(sidebar.searchFilter);
             },
@@ -144,24 +145,24 @@ const apiRequest = {
     },
     setDelete: function (email) {
         $.ajax({
-           type: "DELETE",
-           url: "/api/member",
-           dataType: "json",
-           contentType: "application/json",
-           data: JSON.stringify({email}),
-           success: function () {
-               apiRequest.getDevelopers();
-           },
-           error: function (response) {
-               handleError(response);
-           }
-       });
-   }
+            type: "DELETE",
+            url: "/api/member",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ email }),
+            success: function () {
+                apiRequest.getDevelopers();
+            },
+            error: function (response) {
+                handleError(response);
+            }
+        });
+    }
 }
 
 function handleError(error) {
     /*For an error message with a non-200 HTTP status code, the content will not be parsed by jQuery.
-    = Need a more manual approach to parsing the HTTP body content of non 200-replies into JSON.*/           
+    = Need a more manual approach to parsing the HTTP body content of non 200-replies into JSON.*/
     console.log(error);
     // UPDATE + Call popup
     if (error.responseJSON.message.body) {

@@ -114,59 +114,66 @@ function refreshContent(users) {
     var cardsContainer = document.getElementById('content');
     cardsContainer.innerHTML = '';
 
-    const loggedInClient = clientManager.client;
+    
+    var loggedInIsAdmin = false;
+    if(clientManager.client){
+        const loggedInClient = clientManager.client;
+        loggedInIsAdmin = loggedInClient.isAdmin;
+    }
 
-    users.forEach(user => {
-        if (!user.isDeleted) {
-            var banBtn = '';
-            var deleteBtn = '';
-            var cardState = '';
-            var skills = user.skillset;
-            var skillsHtmlString = '';
-
-            skills.forEach(skill => {
-                skillsHtmlString += '<a class="skillSpan"><li class="skill">' + skill.skillName + '</li><span class="skillLevel">' + skill.skillRate + '/10</span></a>';
-            });
-
-            var onBanClick = 'javascript:requestBan("' + user.email + '")';
-
-            if (loggedInClient.isAdmin) {
-                if (user.isBanned) {
-                    banBtn = `<a href='` + onBanClick + `' class='adminBtn unbanBtn'><span class='deleteSpan unbanSpan'>UNBAN</span><i class='fas fa-user-plus'></i></a>`;
-                    cardState = 'bannedCard';
-                } else {
-                    banBtn = `<a href='` + onBanClick + `' class='adminBtn banBtn'><span class='deleteSpan banSpan'>BAN</span><i class='fas fa-user-minus'></i></a>`;
-                    cardState = 'notBannedCard';
+    if(users){
+        users.forEach(user => {
+            if (!user.isDeleted) {
+                var banBtn = '';
+                var deleteBtn = '';
+                var cardState = '';
+                var skills = user.skillset;
+                var skillsHtmlString = '';
+    
+                skills.forEach(skill => {
+                    skillsHtmlString += '<a class="skillSpan"><li class="skill">' + skill.skillName  + '</li><span class="skillLevel">' + skill.skillRate + '/10</span></a>';
+                });
+    
+                var onBanClick = 'javascript:requestBan("' + user.email + '")';
+    
+                if (loggedInIsAdmin) {
+                    if (user.isBanned) {
+                        banBtn = `<a href='` + onBanClick + `' class='adminBtn unbanBtn'><span class='deleteSpan unbanSpan'>UNBAN</span><i class='fas fa-user-plus'></i></a>`;
+                        cardState = 'bannedCard';
+                    } else {
+                        banBtn = `<a href='` + onBanClick + `' class='adminBtn banBtn'><span class='deleteSpan banSpan'>BAN</span><i class='fas fa-user-minus'></i></a>`;
+                        cardState = 'notBannedCard';
+                    }
+    
+                    var onDeleteClick = 'javascript:requestDelete("' + user.email + '")';
+                    deleteBtn = `<a href='` + onDeleteClick + `' class='adminBtn banBtn'><span class='deleteSpan banSpan'>DELETE</span><i class="fas fa-trash-alt"></i></a>`;
                 }
-
-                var onDeleteClick = 'javascript:requestDelete("' + user.email + '")';
-                deleteBtn = `<a href='` + onDeleteClick + `' class='adminBtn banBtn'><span class='deleteSpan banSpan'>DELETE</span><i class="fas fa-trash-alt"></i></a>`;
+    
+                cardsContainer.insertAdjacentHTML('beforeend', '<div id="' + user.email + '" class="card ' + cardState + '">\
+                        <div class="cardHeader"><div class="adminContent">' + deleteBtn + banBtn + '</div>' +
+                    '<h1 class="title">' + user.name + '</h1>\
+                        <h2>' + user.professionLabel + '</h2>\
+                        <div class="linksContainer"><a href="' + user.github + '"><i class="fab fa-github-square linkIcon"></i></a>\
+                        <a href="' + user.linkedin + '"><i class="fab fa-linkedin linkIcon"></i></a>\
+                        </div>\
+                        </div>\
+                        <div class="cardBody">\
+                            <p class="age">Age: ' + user.age + '</p>\
+                            <p class="location">Location: ' + user.country + '</p>\
+                            <p class="experience">Experience: ' + user.yearsExperience + ' Years</p>\
+                            <p class="cost">Cost: ' + user.pricePerHour + ' $/hour</p>\
+                            <p class="about">About: ' + user.selfDescription + '</p>\
+                            </div>\
+                            <div class="skillsContainer">\
+                            <h6 class=skillsTitle>SKILLS:</h6>\
+                            <ul>'
+                    + skillsHtmlString +
+                    '</ul>\
+                            </div>\
+                    <a href="mailto:' + user.email + '?subject=DEVUP" class="btn">Hire Me!</a>');
             }
-
-            cardsContainer.insertAdjacentHTML('beforeend', '<div id="' + user.email + '" class="card ' + cardState + '">\
-                    <div class="cardHeader"><div class="adminContent">' + deleteBtn + banBtn + '</div>' +
-                '<h1 class="title">' + user.name + '</h1>\
-                    <h2>' + user.professionLabel + '</h2>\
-                    <div class="linksContainer"><a href="' + user.github + '"><i class="fab fa-github-square linkIcon"></i></a>\
-                    <a href="' + user.linkedin + '"><i class="fab fa-linkedin linkIcon"></i></a>\
-                    </div>\
-                    </div>\
-                    <div class="cardBody">\
-                        <p class="age">Age: ' + user.age + '</p>\
-                        <p class="location">Location: ' + user.country + '</p>\
-                        <p class="experience">Experience: ' + user.yearsExperience + ' Years</p>\
-                        <p class="cost">Cost: ' + user.pricePerHour + ' $/hour</p>\
-                        <p class="about">About: ' + user.selfDescription + '</p>\
-                        </div>\
-                        <div class="skillsContainer">\
-                        <h6 class=skillsTitle>SKILLS:</h6>\
-                        <ul>'
-                + skillsHtmlString +
-                '</ul>\
-                        </div>\
-                <a href="mailto:' + user.email + '?subject=DEVUP" class="btn">Hire Me!</a>');
-        }
-    });
+        });
+    }  
 }
 
 function requestBan(email) {
