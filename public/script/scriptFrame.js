@@ -39,7 +39,7 @@ const sidebar = {
             is_admin: false,
             skills: [],
             name_start: "",
-            price_max:10000
+            price_max:500
         };
         // Load available skillset from server
         apiRequest.getSkillSets();
