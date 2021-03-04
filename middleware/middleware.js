@@ -46,22 +46,22 @@ function checkSkillSets() {
 
 // Debuging adding user to database
 function checkCreateDummyUser() {
-
-    let fileString = fs.readFileSync('dbUsers.json').toString();
-    let fileObj = JSON.parse(fileString);
-    const moviesArr = fileObj.users;
     User.find({}, function (err, data) {
         if (err) {
             console.error(err)
         } else {
             if (data.length == 0) {
-
-                User.insertMany(moviesArr).then(function () {
-                    console.log("Data inserted")  // Success 
-                }).catch(function (error) {
-                    console.error(error)      // Failure 
-                });
-
+                let fileString = fs.readFileSync('dbUsers.json').toString();
+                let fileObj = JSON.parse(fileString);
+                let userData = fileObj.users;
+                for (let index = 0; index < userData.length; index++) {
+                    let dummyUser = new User(userData[index])
+                    dummyUser.save().then(function () {
+                        console.log("Data inserted")  // Success 
+                    }).catch(function (error) {
+                        console.error(error)      // Failure 
+                    });
+                }
             } else {
                 console.log("Dummy user exist, Skip creation")
             }
