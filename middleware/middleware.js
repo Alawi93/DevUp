@@ -2,13 +2,14 @@ const Utils = require("../models/utils")
 const User = require("../models/user")
 const moongose = require("mongoose");
 const Admin = require("../models/user")
+const fs = require('fs');
 
 /*
     Will display incoming requests to our routes in the console
     and it will also display the access method.
 */
 
-function incomingRequest(req,res,next){
+function incomingRequest(req, res, next) {
     console.log(`Recieved request on path: '${req.path}'\nHTTP method: ${req.method}.`);
     next();
 }
@@ -45,28 +46,22 @@ function checkSkillSets() {
 
 // Debuging adding user to database
 function checkCreateDummyUser() {
+
+    let fileString = fs.readFileSync('dbUsers.json').toString();
+    let fileObj = JSON.parse(fileString);
+    const moviesArr = fileObj.users;
     User.find({}, function (err, data) {
         if (err) {
             console.error(err)
         } else {
             if (data.length == 0) {
-                console.log("No Dummy user record, creates it in DB")
-                let dummyUser = new User({
-                    password: "hejhej123",
-                    isAdmin: false,
-                    email: "hithereman@hotmail.com",
-                    name: "Gunnar",
-                    professionLabel: 'desktop-master',
-                    age: 5,
-                    country: 'iraq',
-                    yearsExperience: 4,
-                    pricePerHour: 35,
-                    memberSince: Date.now(),
-                    selfDescription: 'kinda cool',
-                    isBanned: false,
-                    skillset:[{skillName: 'java', skillRate: 5}] 
-                })
-                dummyUser.save()
+
+                User.insertMany(moviesArr).then(function () {
+                    console.log("Data inserted")  // Success 
+                }).catch(function (error) {
+                    console.error(error)      // Failure 
+                });
+
             } else {
                 console.log("Dummy user exist, Skip creation")
             }
@@ -77,21 +72,22 @@ function checkCreateDummyUser() {
 
 // Debuging adding user to database
 function checkAddAdmin() {
-    Admin.findOne({isAdmin: true}, function (err, data) {
+    Admin.findOne({ isAdmin: true }, function (err, data) {
         if (err) {
             console.error(err)
             console.log("No admin")
         } else {
             if (data == null) {
                 console.log("No Admin, creates it in DB")
-                
+
                 let dummyAdmin = new Admin({
                     password: "admin1234",
                     isAdmin: true,
                     email: "admin@devup.com",
+                    name: "ADMIN",
                 })
                 dummyAdmin.save()
-                
+
             } else {
                 console.log("Admin exist, Skip creation")
             }
