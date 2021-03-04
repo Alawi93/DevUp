@@ -238,12 +238,9 @@ const sidebar = {
     },
     requestLogout: function () {
         if (demoMode.isOn) {
-            demoMode.end();
-            clientManager.viewAdapt("not-logged-in");
-            sidebar.onResize(); 
-        } else {
-            apiRequest.logout();
-        }
+            demoMode.end(); 
+        } 
+        apiRequest.logout();
         this.onResize();
     }
 };
@@ -340,7 +337,6 @@ const popup = {
             popupMsg.insertAdjacentHTML("beforeend",
                 `<p>${line}</p><br>`);
         };
-        // $("#popup-msg").text(msg);
         $("#popup-container").addClass("display");
         $("#content-wrapper").fadeTo("slow", 0.3); // Fade background
     },
@@ -353,32 +349,8 @@ const popup = {
 
 const demoMode = {
     isOn: false,
-    demoClient:
-    {
-        _id: 1,
-        email: "john@mail.com",
-        password: "",
-        isAdmin: false,
-        name: "John Ohlsson",
-        professionLabel: "Web developer",
-        age: 30,
-        country: "SWEDEN",
-        yearsExperience: 5,
-        pricePerHour: 1100,
-        github: "DevOps97",
-        linkedin: "Wee",
-        memberSince: "2020-09-12",
-        selfDescription: "A dedicated software developer.",
-        isBanned: false,
-        skillset: [
-            { skillName: "Java", skillRate: 8 },
-            { skillName: "HTML", skillRate: 2 },
-            { skillName: "JavaScript", skillRate: 4 },
-            { skillName: "Python", skillRate: 3 },
-            { skillName: "MySql", skillRate: 6 }]
-    },
-    start: function () { // 'developer' / 'admin'
-        clientManager.loginSuccessful(this.demoClient); // REMOVE LATER?
+    start: function () {
+        apiRequest.login("hithereman@hotmail.com", "hejhej123");
         $("#main-wrapper").addClass("demo-mode");
         this.isOn = true;
         signIn.hideSignIn();
@@ -386,12 +358,10 @@ const demoMode = {
         popup.display("Demo mode started",
             ["Explore the view when logged in as a software developer.",
                 "API access is limited in demo mode."]);
-        apiRequest.getDevelopers(sidebar.searchFilter);
     },
     end: function () {
         this.isOn = false;
         $("#main-wrapper").removeClass("demo-mode");
-        clientManager.logoutSuccessful();
         popup.display("Demo mode ended", ["Continue to browse developers, or create an account."]);
     }
 };

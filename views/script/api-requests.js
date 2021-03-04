@@ -109,24 +109,19 @@ const apiRequest = {
     },
     updateProfile: function (updatedClient) {
         console.log(updatedClient);
-        if (demoMode.isOn) {
-            clientManager.setClient(updatedClient);
-            popup.display("Success!", ["Demo profile updated."]);
-        } else {
-            // $.ajax({
-            //     type: "PUT",
-            //     url: "/api/member",
-            //     dataType: "json",
-            //     data: JSON.stringify(updatedClient),
-            //     success: function (response) {
-            //         // Response = Updated client object
-            //         clientManager.setClient(response.ffff); ???
-            // },
-            //     error: function (response) {
-            //         handleError(response); ????
-            // }
-            // });
-        };
+        // $.ajax({
+        //     type: "PUT",
+        //     url: "/api/member",
+        //     dataType: "json",
+        //     data: JSON.stringify(updatedClient),
+        //     success: function (response) {
+        //         // Response = Updated client object
+        //         clientManager.setClient(response.ffff); ???
+        // },
+        //     error: function (response) {
+        //         handleError(response); ????
+        // }
+        // });
     },
     setBan: function (ban, email) {
         $.ajax({
