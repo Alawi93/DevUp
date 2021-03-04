@@ -350,7 +350,7 @@ const popup = {
 const demoMode = {
     isOn: false,
     start: function () {
-        apiRequest.login("hithereman@hotmail.com", "hejhej123");
+        apiRequest.login("hithereman@gmail.com", "hejhej123");
         $("#main-wrapper").addClass("demo-mode");
         this.isOn = true;
         signIn.hideSignIn();

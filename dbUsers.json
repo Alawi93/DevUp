@@ -97,5 +97,48 @@
             "selfDescription": "kinda cool",
             "isBanned": false,
             "skillset": [{ "skillName": "Java", "skillRate": 5 }]
-        }]
+        },
+        {
+            "password": "1234",
+            "isAdmin": false,
+            "email": "anton@gmail.com",
+            "name": "Anton Göransson",
+            "professionLabel": "Backend developer",
+            "age": 32,
+            "country": "SWEDEN",
+            "yearsExperience": 3,
+            "pricePerHour": 300,
+            "selfDescription": "Dedicated developer with a passion for home automations and data communicaitons.",
+            "isBanned": false,
+            "skillset": [
+                {"skillName": "Java", "skillRate": 8 },
+                {"skillName": "HTML", "skillRate": 4 },
+                {"skillName": "CSS", "skillRate": 3 },
+                {"skillName": "javaScript", "skillRate": 3 },
+                {"skillName": "Python", "skillRate": 2 },
+                {"skillName": "MySql", "skillRate": 6 },
+                {"skillName": "PhP", "skillRate": 3 }]
+        },
+        {
+            "password": "1234",
+            "isAdmin": false,
+            "email": "ludde@gmail.com",
+            "name": "Ludvig Jönsson",
+            "professionLabel": "Software developer",
+            "age": 23,
+            "country": "SWEDEN",
+            "yearsExperience": 3,
+            "pricePerHour": 400,
+            "selfDescription": "Passionated programmer with high problem-solving capabilities.",
+            "isBanned": false,
+            "skillset": [
+                {"skillName": "Java", "skillRate": 9 },
+                {"skillName": "HTML", "skillRate": 3 },
+                {"skillName": "CSS", "skillRate": 4 },
+                {"skillName": "javaScript", "skillRate": 2 },
+                {"skillName": "Python", "skillRate": 3 },
+                {"skillName": "MySql", "skillRate": 5 },
+                {"skillName": "PhP", "skillRate": 4 }]
+        }
+    ]
   } 

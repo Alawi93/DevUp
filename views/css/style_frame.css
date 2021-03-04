@@ -418,6 +418,7 @@ input[type=number] {
 #sidebar-footer img {
     margin-bottom: 12px;
     opacity: 0.4;
+    user-select: none;
 }
 
 #sidebar-footer button {

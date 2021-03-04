@@ -30,7 +30,7 @@ const apiRequest = {
             success: function (response) {
                 // Response = Array of available skillsets 
                 // to search on and include in profile
-                sidebar.availableSkills = tempSkillsets;
+                sidebar.availableSkills = response.utils[0].skillsets;
                 sidebar.setProfileSection();
                 sidebar.setSearchSection();
             },
@@ -54,7 +54,7 @@ const apiRequest = {
                     }
                 } else {
                     // Make logged in directly
-                    clientManager.setClient(response.user);
+                    clientManager.loginSuccessful(response.user);
                 }
                 // Refresh body content
                 apiRequest.getDevelopers();
@@ -65,18 +65,18 @@ const apiRequest = {
         });
     },
     tryAutoLogin: function () {
-        // $.ajax({
-        //     type: "GET",
-        //     url: "/api/member/isloggedin",
-        //     dataType: "json",
-        //     success: function (response) {
-        //         // Response = Client object
-        //         clientManager.loginSuccessful(response.ffff); ???
-        //     },
-        //     error: function (response) {
-        //         handleError(response); ????
-        //     }
-        // });
+        $.ajax({
+            type: "GET",
+            url: "/api/member/isloggedin",
+            dataType: "json",
+            success: function (response) {
+                // Response = Client object
+                clientManager.loginSuccessful(response.user);
+            },
+            error: function (response) {
+                console.log("Client is not already logged in.");
+            }
+        });
     },
     login: function (email, password) {
         $.ajax({
@@ -95,33 +95,33 @@ const apiRequest = {
         });
     },
     logout: function () {
-        // $.ajax({
-        //     type: "GET",
-        //     url: "/api/member/logout",
-        //     dataType: "json",
-        //     success: function () {
-        //         clientManager.logoutSuccessful();
-        //     },
-        //     error: function (response) {
-        //         handleError(response); ????
-        //     }
-        // });
+        $.ajax({
+            type: "GET",
+            url: "/api/member/logout",
+            dataType: "json",
+            success: function () {
+                clientManager.logoutSuccessful();
+            },
+            error: function (response) {
+                handleError(response);
+            }
+        });
     },
     updateProfile: function (updatedClient) {
         console.log(updatedClient);
-        // $.ajax({
-        //     type: "PUT",
-        //     url: "/api/member",
-        //     dataType: "json",
-        //     data: JSON.stringify(updatedClient),
-        //     success: function (response) {
-        //         // Response = Updated client object
-        //         clientManager.setClient(response.ffff); ???
-        // },
-        //     error: function (response) {
-        //         handleError(response); ????
-        // }
-        // });
+        $.ajax({
+            type: "PUT",
+            url: "/api/member",
+            dataType: "json",
+            data: JSON.stringify(updatedClient),
+            success: function (response) {
+                // Response = Updated client object
+                clientManager.setClient(response.user);
+        },
+            error: function (response) {
+                handleError(response);
+        }
+        });
     },
     setBan: function (ban, email) {
         $.ajax({
