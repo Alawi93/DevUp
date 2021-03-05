@@ -117,10 +117,10 @@ const apiRequest = {
             success: function (response) {
                 // Response = Updated client object
                 clientManager.setClient(response.user);
-        },
+            },
             error: function (response) {
                 handleError(response);
-        }
+            }
         });
     },
     setBan: function (ban, email) {
