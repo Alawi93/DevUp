@@ -55,8 +55,47 @@
 
 ## Backend
    - **Server:**
+      -  The server is using Node.js which is a Javascript run-time enviroment that is used for building HTTP servers. The server is the starting point of DevUp and includes several imports (`require`) and important code segments that deals with security, database connections, and setup code.
+          - `require()`:
+
+            1. Express: Setting up express for incoming HTTP requests by using `routes`. It helps us respond to requests with route support to specific URLs. We create the express app by setting it to the app variable. We also use the app variable for the server to listen to a specific port for incoming requests.
+            ```javascript
+                const express = require('express');
+                const app     = express();
+                const port    = process.env.PORT || 3000;
+
+              app.listen(port, ()=>{
+              console.log(`Server started on port: ${port}`)
+              });  
+            ``` 
+            2. Express-session: For establishinga session variable (read more under security section)
+            ```javascript
+            const session = require('express-session');
+
+            app.use(session({secret: process.env.SECRETS,resave:false,saveUninitialized: true}))
+
+            ```
+
+            3. MongoDB: For establishing connections to a database we need to require this package and use it with the `connect` method.
+             ```javascript
+             const mongoose   = require('mongoose');
+
+             mongoose.connect(process.env.DATABASE_LINK,{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+            ``` 
+            4. BodyParser: It's a middleware that is used for parsing incoming request bodies before its handled in the routes. It's purpose is to make the incoming request more managable since it extracts the entire body portion of the incoming request and insert it to the `req.body`.
+            ```javascript
+            const bodyParser = require('body-parser');
+
+            app.use(bodyParser.json());
+            app.use(bodyParser.urlencoded({
+            extended:true
+            })); 
+            ``` 
+            
+
       - **Enviromental Variables**
-   - **Routes:** 
+   - **Routes:** All the routes are built up in the same way, the router specifies what type of `CRUD` method its expecting on a predefined URL with a callback function that triggers after the request has come in. The last thing is to export the routes, they are then used in the server.
+        - `routes`:
    ```javascript
         var express = require('express');
         var router = express.Router();
@@ -66,6 +105,9 @@
         });
         module.exports = router;
    ```
+    
+
+
    - **MongoDB:**
         -    MongoDB is intigrated as the backend database. The database is used as it gives a good structure of JSON objects. As the data communication in devUp is designed to work with JSON data, makes it a perfect fit without need to take into consideradion of relationship. As all data is connected to every specific developer. This also reduce the risk of SQL injection.
         -   Backend implement the `Moongose framework` for a faster and easier implementation of the MongoDB. To create specific schema and model templates for adding Developers and creating accounts. The two Model classes are `user.js` and `utils.js`.
