@@ -49,10 +49,22 @@
  - **Model View Controller (MVC):**
  - 
 ## Security
- - **Session:**
+ - **Session | `Session managament`:** Since HTTP is stateless (no session information is retained by the receiver), there is no way to associate a request to any other request and thus we need a way to identify the current user accessing our system. In devUp this helps us keep track of what users are logged in and have the privilege to access server information.
  - **Hosting:**
  - **Data storage:**
+- **Enviromental variable:** We use load enviromental variables from `.env` file into `process.env` and include it for storing the connection address to the database and for the secret used in sessions. It helps us hide configurations that we would not like to include with our github pushes since this information is not to be showed. See the following for an example of declaring these variables in .env file and how its used in the server (`app,js`).
+```
+DATABASE_LINK="link-To-Database"
+SECRET="someLongSentenceHere"
+```
+ And how its included (marked in quotation):
+ ```javascript
+mongoose.connect("process.env.DATABASE_LINK",{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
+app.use(session({
+    secret: "process.env.SECRETS",
+    resave:false,saveUninitialized: true}))
+```
 ## Backend
    - **Server:**
       -  The server is using Node.js which is a Javascript run-time enviroment that is used for building HTTP servers. The server is the starting point of DevUp and includes several imports (`require`) and important code segments that deals with security, database connections, and setup code.
@@ -92,8 +104,6 @@
             })); 
             ``` 
             
-
-      - **Enviromental Variables**
    - **Routes:** All the routes are built up in the same way, the router specifies what type of `CRUD` method its expecting on a predefined URL with a callback function that triggers after the request has come in. The last thing is to export the routes, they are then used in the server.
         - `routes`:
    ```javascript
@@ -106,7 +116,11 @@
         module.exports = router;
    ```
     
-
+ - `Server`:
+       ```javascript
+        app.use("/api/developers",developer);
+        app.use("/api/member",member);
+       ```
 
    - **MongoDB:**
         -    MongoDB is intigrated as the backend database. The database is used as it gives a good structure of JSON objects. As the data communication in devUp is designed to work with JSON data, makes it a perfect fit without need to take into consideradion of relationship. As all data is connected to every specific developer. This also reduce the risk of SQL injection.
