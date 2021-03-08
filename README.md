@@ -55,7 +55,7 @@
 - **Enviromental variable:** We use load enviromental variables from `.env` file into `process.env` and include it for storing the connection address to the database and for the secret used in sessions. It helps us hide configurations that we would not like to include with our github pushes since this information is not to be showed. See the following for an example of declaring these variables in .env file and how its used in the server (`app,js`).
 ```
 DATABASE_LINK="link-To-Database"
-SECRET="someLongSentenceHere"
+SECRETS="someLongSentenceHere"
 ```
  And how its included (marked in quotation):
  ```javascript
