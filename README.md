@@ -11,7 +11,7 @@
 
 - **[About DevUp](#About-DevUp)**
 - **[Architectural Approach](#Architectural-Approach)**
-    - **Single page (SPA)**
+    - **Single Page Architecture (SPA)**
     - **Restful API**
     - **Model View Controller (MVC)**
 - **[Security](#Security)**
