@@ -220,8 +220,8 @@ app.use(session({
         ```javascript
         sidebar.toggleDropDown("edit-profile");
         ```
-  - Other global Javascript scopes are ``signIn`` (for register and login operations), ``clientManager`` (for the current client setup, initialized upon login or register), ``popup`` (for displaying short messages, like error messages fromt he server), ``demoMode`` (for indicating demo login) and ``api-request`` (for data requets to the server). 
-  - Another inportant aspect of the Javascript scope separations is the independence between features. For example, the ``api-request`` scope is dedicated only to server requests. Responses are then passed to the appropraiate view scope for rendering. This creates a clean separation of concern between the view scope and the data communications scope.<br>
+  - Other global Javascript scopes are ``signIn`` (for register and login operations), ``clientManager`` (for the current client setup, initialized upon login or register), ``popup`` (for displaying short messages, like error messages fromt the server), ``demoMode`` (for indicating demo login) and ``apiRequest`` (for data requets to the server). 
+  - Another inportant aspect of the Javascript scope separations is the independence between features. For example, the ``apiRequest`` scope is dedicated only to server requests. Responses are then passed to the appropraiate view scope for rendering. This creates a clean separation of concern between the view scope and the data communications scope.<br>
   Below is an example of one server request function from the ``apiRequest`` scope.
     ```javascript
     const apiRequest = {
