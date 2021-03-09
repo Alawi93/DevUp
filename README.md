@@ -5,7 +5,7 @@
 
 ---
 ![icon](/views/images/logo.svg)
-<img  src="/views/images/logo.svg" style="height:50px;">
+<img  src="/views/images/logo.svg" style="height:100px;">
 <br>
 
 ## Table of contents <!-- omit in toc -->
