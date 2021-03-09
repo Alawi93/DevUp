@@ -40,7 +40,7 @@
 
 ## Architectural Approach
  - **Single Page Architecture (SPA):** The browser experience centres around one generic HTML document being loaded at session start, and updated at client side as new content is requested. By not reloading the entire page when content is requested, the amounts of data being transferred is heavily reduced. This provides fast and light network operartions. Also, by delegating the DOM-manipulations and thus the HTML rendering to client side, the server is relieved.
- - **Restful API:** Dynamic data is provided in JSON format using a dedicated Restful API. This way, the service is not constrained to only serving browser clients. For example, it would be easy to create a companion app for mobile phones, using the existing API. 
+ - **Restful API:** Dynamic data is provided in JSON format using a dedicated Restful API. This way, the service is not constrained to only serving browser clients. For example, it would be easy to create a companion app for mobile phones, or a desktop app, using the existing API. 
  - **Model View Controller (MVC):**
  - 
 ## Security
