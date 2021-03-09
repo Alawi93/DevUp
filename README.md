@@ -6,6 +6,7 @@
 ---
 
 <br>
+
 [Check out](https://devup.duckdns.org/) the deployed web app.
 
 ## Table of contents <!-- omit in toc -->
