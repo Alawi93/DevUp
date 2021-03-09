@@ -16,21 +16,30 @@ $(window).resize(function () {
 const sidebar = {
     minWidthContent: 440, // Used for dynamic sidebar handling. Set to smallest width of content display.
     minWidthSidebar: 300,
+    lastResizeWidth: 0,
     menuDisplayed: false,
     bigScreen: false,
     availableSkills: [], // Load from server
     searchFilter: {}, // Filter object for searching developers
     onResize: function () {
-        this.bigScreen = $(window).width() > (this.minWidthContent + this.minWidthSidebar);
-        if (this.bigScreen) {
-            $("#main-wrapper").addClass("big-screen");
-            $("#main-wrapper").addClass("menu-displayed");
-            this.menuDisplayed = true;
-        } else {
-            $("#main-wrapper").removeClass("big-screen");
-            $("#main-wrapper").removeClass("menu-displayed");
-            this.menuDisplayed = false;
+        let currentWidth = $(window).width();
+        // Prevent resize operation if caused by mobile phone keyboard appearing
+        if (currentWidth != this.lastResizeWidth) {
+            // Determine components to show/hide and set sidebar toggle state (expanded/collapsed)
+            this.bigScreen = $(window).width() > (this.minWidthContent + this.minWidthSidebar);
+            if (this.bigScreen) {
+                $("#main-wrapper").addClass("big-screen");
+                $("#main-wrapper").addClass("menu-displayed");
+                this.menuDisplayed = true;
+            } else {
+                $("#main-wrapper").removeClass("big-screen");
+                $("#main-wrapper").removeClass("menu-displayed");
+                this.menuDisplayed = false;
+            }
+            this.lastResizeWidth = currentWidth;
         }
+
+
     },
     init: function () { // Initialize sidebar at page load
         this.onResize();
@@ -148,7 +157,7 @@ const sidebar = {
         upd_client.pricePerHour = $profileSection.find("#hour-rate").val();
         upd_client.github = $profileSection.find("#github").val();
         upd_client.linkedin = $profileSection.find("#linkedin").val();
-        upd_client.description = $profileSection.find("#description").val();
+        upd_client.selfDescription = $profileSection.find("#description").val();
         // 2. Collect and filter skills with rating > 0
         const upd_skillset = [];
         const skillSliders = document.querySelectorAll("#skillset .slider");
@@ -351,14 +360,13 @@ const popup = {
 const demoMode = {
     isOn: false,
     start: function () {
-        apiRequest.login("hithereman@gmail.com", "hejhej123");
+        apiRequest.login("liedra@optonline.net", "1234");
         $("#main-wrapper").addClass("demo-mode");
         this.isOn = true;
         signIn.hideSignIn();
         sidebar.onResize();
         popup.display("Demo mode started",
-            ["Explore the view when logged in as a software developer.",
-                "API access is limited in demo mode."]);
+            ["Explore the view when logged in as a software developer."]);
     },
     end: function () {
         this.isOn = false;

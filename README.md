@@ -191,12 +191,11 @@ app.use(session({
 > *HTML, CSS, Javascript, AJAX, jQuery*
 - **Single Page Architecture (SPA)**
 
-  - The single HTML-document acts as a general-purpose frame with multiple dedicated **injection points** for dynamic content. It thus includes all compontents and scripts neccessary to perform client-side DOM rendering and asynchronous API-requests for adapting its view. Content requests are performed using **AJAX with jQuery**. Client-side rendering of the HTML document is then performed by processing the JSON response from the server.
- 
+  - The single HTML-document acts as a general-purpose frame with multiple dedicated **injection points** for dynamic content. It thus includes all compontents and scripts neccessary to perform client-side DOM rendering and asynchronous API-requests for adapting the view. Content requests are performed using **AJAX with jQuery**. Client-side rendering of the HTML document is then performed by processing the JSON response from the server.
 
 - **Responsive design**
   - *Mobile-first design*.
-  - *CSS with static width thresholds for determing basic scaling*. This includes removing selected items from the view for smaller screens. As an example, the header will remove the Devup logo and the client's name on small screens.
+  - *CSS with static width thresholds for determing basic scaling*. This includes removing selected items from the view for smaller screens. As an example, the header will remove the DevUp logo and the client's name on small screens.
   - *JavaScript to calculate behaviours based on screen size*. On big screens the sidebar will shrink the adjacent content area, possibly forcing items to be stacked on top of each other rather than side by side. However, on small screens, the sidebar instead overlaps the content area, as shrinking it would appear jittery. For this calculation, the script takes into account the width of the sidebar, and the minimum width required to display one item in the main content area. If both cannot fit side by side, the sidebar instead overlaps the content area. <br>
   The same script also determines the sidebar defualt mode: For big screens, the sidebar is displayed by defualt.
  
@@ -220,8 +219,8 @@ app.use(session({
         ```javascript
         sidebar.toggleDropDown("edit-profile");
         ```
-  - Other global Javascript scopes are ``signIn`` (for register and login operations), ``clientManager`` (for the current client setup, initialized upon login or register), ``popup`` (for displaying short messages, like error messages fromt he server), ``demoMode`` (for indicating demo login) and ``api-request`` (for data requets to the server). 
-  - Another inportant aspect of the Javascript scope separations is the independence between features. For example, the ``api-request`` scope is dedicated only to server requests. Responses are then passed to the appropraiate view scope for rendering. This creates a clean separation of concern between the view scope and the data communications scope.<br>
+  - Other global Javascript scopes are ``signIn`` (for register and login operations), ``clientManager`` (for the current client setup, initialized upon login or register), ``popup`` (for displaying short messages, like error messages fromt the server), ``demoMode`` (for indicating demo login) and ``apiRequest`` (for data requets to the server). 
+  - Another inportant aspect of the Javascript scope separations is the independence between features. For example, the ``apiRequest`` scope is dedicated only to server requests. Responses are then passed to the appropraiate view scope for rendering. This creates a clean separation of concern between the view scope and the data communications scope.<br>
   Below is an example of one server request function from the ``apiRequest`` scope.
     ```javascript
     const apiRequest = {

@@ -255,7 +255,7 @@ body {
 
 /* Expand dropdownable content if class dropdown is added to parent div */
 .dropdown .dropdownable{ 
-    max-height:970px !important;
+    max-height:1000px !important;
 
     transition-property: max-height;
 	transition-duration: 2s;
@@ -385,6 +385,10 @@ input[type=number] {
 #sidebar .title {
     color: var(--sidebar-inner-dropdown);
     user-select: none; 
+}
+
+#sidebar .dev-info {
+    color: rgb(182, 182, 182);
 }
 
 #sidebar #profile-submit {
