@@ -108,15 +108,18 @@ const apiRequest = {
         });
     },
     updateProfile: function (updatedClient) {
-        console.log(updatedClient);
+        console.log(JSON.stringify(updatedClient));
         $.ajax({
             type: "PUT",
             url: "/api/member",
             dataType: "json",
+            contentType: "application/json",
             data: JSON.stringify(updatedClient),
             success: function (response) {
                 // Response = Updated client object
-                clientManager.setClient(response.user);
+                clientManager.setClient(response.dbUserData);
+                // Refresh body content
+                apiRequest.getDevelopers();
             },
             error: function (response) {
                 handleError(response);
