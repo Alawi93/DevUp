@@ -31,21 +31,16 @@
 
 ## About DevUp
 - DevUps allows software developers  to easily market themselves for job or gig opportunities.
-
 - No account or login is required for browsing among developers.
-
 - If you are looking for a developer for employment or gig purposes, use the filter function to specialize your search.
-
 - If you are a developer, create an account to start edit your profile in simple steps.
-
 - A DevUp admin is privileged to ban, delete and add developers
-
 - Error management using appropriate HTTP status codes, served by backend and handled by frontend.
 
 
 ## Architectural Approach
- - **#Single page (SPA):**
- - **Restful API:**
+ - **Single Page Architecture (SPA):** The browser experience centres around one generic HTML document being loaded at session start, and updated at client side as new content is requested. By not reloading the entire page when content is requested, the amounts of data being transferred is heavily reduced. This provides fast and light network operartions. Also, by delegating the DOM-manipulations and thus the HTML rendering to client side, the server is relieved.
+ - **Restful API:** Dynamic data is provided in JSON format using a dedicated Restful API. This way, the service is not constrained to only serving browser clients. For example, it would be easy to create a companion app for mobile phones, using the existing API. 
  - **Model View Controller (MVC):**
  - 
 ## Security
