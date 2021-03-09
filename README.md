@@ -28,7 +28,7 @@
 <br>
 
 
-## About DevUp
+## About DevUp <img  src="/views/images/devup-icon-larger.png" width="200">
 DevUps allows software developers to easily market themselves for job or gig opportunities.
 
 *Features:*
