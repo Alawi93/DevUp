@@ -56,7 +56,7 @@ DevUps allows software developers to easily market themselves for job or gig opp
  - **Error management** using appropriate HTTP status codes, served by backend and handled by frontend.
 ## Security
  - **Session | `Session managament`:** Since HTTP is stateless (no session information is retained by the receiver), there is no way to associate a request to any other request and thus we need a way to identify the current user accessing our system. In devUp this helps us keep track of what users are logged in and have the privilege to access server information.
- - **Hosting:**
+ - **Hosting:** The web app is deployed on a VPS using NGINX reverse proxy server. Certbot is used to force TLS on the channels (with Let's Encrypt certificates). The Node app itself is managed with PM2 on the server.
  - **Data storage:**
 - **Enviromental variable:** We use load enviromental variables from `.env` file into `process.env` and include it for storing the connection address to the database and for the secret used in sessions. It helps us hide configurations that we would not like to include with our github pushes since this information is not to be showed. See the following for an example of declaring these variables in .env file and how its used in the server (`app,js`).
 ```
