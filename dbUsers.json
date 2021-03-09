@@ -7,54 +7,134 @@
             "name": "Sebastian Norén",
             "professionLabel": "Software Enginner",
             "age": 31,
-            "country": "Sweden",
-            "yearsExperience": 2,
-            "pricePerHour": 200,
-            "selfDescription": "King",
+            "country": "SWEDEN",
+            "yearsExperience": 3,
+            "pricePerHour": 400,
+            "selfDescription": "Software Engineer with a main focus on Game and Mobile Devlopment.",
             "isBanned": false,
-            "skillset": [{ "skillName": "Java", "skillRate": 5 }]
+            "skillset": [
+                {
+                    "skillName": "Java",
+                    "skillRate": 7
+                },
+                {
+                    "skillName": "C++",
+                    "skillRate": 2
+                },
+                {
+                    "skillName": "C",
+                    "skillRate": 2
+                },
+                {
+                    "skillName": "C#",
+                    "skillRate": 4
+                },
+                {
+                    "skillName": "HTML",
+                    "skillRate": 6
+                },
+                {
+                    "skillName": "CSS",
+                    "skillRate": 4
+                },
+                {
+                    "skillName": "JavaScript",
+                    "skillRate": 2
+                },
+                {
+                    "skillName": "Python",
+                    "skillRate": 3
+                },
+                {
+                    "skillName": "MySql",
+                    "skillRate": 6
+                },
+                {
+                    "skillName": "PhP",
+                    "skillRate": 1
+                }
+            ]
         },
         {
             "password": "hejhej123",
             "isAdmin": false,
             "email": "hithereman@gmail.com",
-            "name": "Gunnar Alibaba",
-            "professionLabel": "desktop-master",
+            "name": "Kasim Fadhil",
+            "professionLabel": "Web Developer",
             "age": 26,
-            "country": "Iraq",
+            "country": "IRAQ",
             "yearsExperience": 4,
-            "pricePerHour": 35,
-            "selfDescription": "kinda cool",
+            "pricePerHour": 350,
+            "selfDescription": "Lover for frontend!",
             "isBanned": false,
-            "skillset": [{ "skillName": "Java", "skillRate": 5 }]
+            "skillset": [
+                {
+                    "skillName": "HTML",
+                    "skillRate": 10
+                },
+                {
+                    "skillName": "CSS",
+                    "skillRate": 10
+                },
+                {
+                    "skillName": "JavaScript",
+                    "skillRate": 8
+                },
+                {
+                    "skillName": "MongoDB",
+                    "skillRate": 8
+                },
+                {
+                    "skillName": "PhP",
+                    "skillRate": 6
+                }
+            ]
         },
         {
             "password": "1234",
             "isAdmin": false,
             "email": "liedra@optonline.net",
             "name": "Ashley Williams",
-            "professionLabel": "desktop-master",
+            "professionLabel": "Data Scientist",
             "age": 21,
-            "country": "England",
+            "country": "ENGLAND",
             "yearsExperience": 4,
-            "pricePerHour": 35,
-            "selfDescription": "kinda cool",
+            "pricePerHour": 400,
+            "selfDescription": "Strength in Buissines intelligence and creating data models for Machine Learning.",
             "isBanned": false,
-            "skillset": [{ "skillName": "Java", "skillRate": 5 }]
+            "skillset": [
+                {
+                    "skillName": "Python",
+                    "skillRate": 6
+                },
+                {
+                    "skillName": "MySql",
+                    "skillRate": 8
+                }
+            ]
         },
         {
             "password": "1234",
             "isAdmin": false,
             "email": "phyruxus@live.com",
             "name": "Kygo Machimada",
-            "professionLabel": "desktop-master",
-            "age": 18,
-            "country": "Japan",
-            "yearsExperience": 1,
-            "pricePerHour": 10,
-            "selfDescription": "kinda cool",
+            "professionLabel": "Game Engine Engineer",
+            "age": 22,
+            "country": "JAPAN",
+            "yearsExperience": 6,
+            "pricePerHour": 100,
+            "selfDescription": "Developer of Sendo game engine",
             "isBanned": false,
-            "skillset": [{ "skillName": "Java", "skillRate": 5 }]
+            "skillset": [
+                {
+                    "skillName": "C++",
+                    "skillRate": 9
+                },
+                {
+                    "skillName": "C",
+                    "skillRate": 6
+                }
+            ]
         },
         {
             "password": "1234",
@@ -64,39 +144,70 @@
             "professionLabel": "desktop-master",
             "age": 55,
             "country": "Denmark",
-            "yearsExperience": 4,
-            "pricePerHour": 35,
-            "selfDescription": "kinda cool",
+            "yearsExperience": 2,
+            "pricePerHour": 380,
+            "selfDescription": "Creating small java applications for quick uses.",
             "isBanned": false,
-            "skillset": [{ "skillName": "Java", "skillRate": 5 }]
+            "skillset": [
+                {
+                    "skillName": "Java",
+                    "skillRate": 5
+                }
+            ]
         },
         {
             "password": "1234",
             "isAdmin": false,
             "email": "ghaviv@gmail.com",
             "name": "Sten-Sture Svensson",
-            "professionLabel": "desktop-master",
+            "professionLabel": "Software Developer",
             "age": 24,
-            "country": "Sweden",
-            "yearsExperience": 4,
-            "pricePerHour": 35,
-            "selfDescription": "kinda cool",
+            "country": "SWEDEN",
+            "yearsExperience": 5,
+            "pricePerHour": 500,
+            "selfDescription": "Developer profecient in multiple language.",
             "isBanned": false,
-            "skillset": [{ "skillName": "Java", "skillRate": 5 }]
+            "skillset": [
+                {
+                    "skillName": "Java",
+                    "skillRate": 6
+                },
+                {
+                    "skillName": "C#",
+                    "skillRate": 9
+                },
+                {
+                    "skillName": "Python",
+                    "skillRate": 5
+                },
+                {
+                    "skillName": "MySql",
+                    "skillRate": 4
+                },
+                {
+                    "skillName": "PhP",
+                    "skillRate": 5
+                }
+            ]
         },
         {
             "password": "1234",
             "isAdmin": false,
             "email": "folke@gmail.com",
             "name": "Mark Adams",
-            "professionLabel": "desktop-master",
-            "age": 28,
+            "professionLabel": "Embedded System engineer",
+            "age": 45,
             "country": "USA",
-            "yearsExperience": 4,
-            "pricePerHour": 35,
-            "selfDescription": "kinda cool",
+            "yearsExperience": 25,
+            "pricePerHour": 500,
+            "selfDescription": "Creating IOT and Embedded solutions for High Tech companies.",
             "isBanned": false,
-            "skillset": [{ "skillName": "Java", "skillRate": 5 }]
+            "skillset": [
+                {
+                    "skillName": "C",
+                    "skillRate": 10
+                }
+            ]
         },
         {
             "password": "1234",
@@ -141,4 +252,4 @@
                 {"skillName": "PhP", "skillRate": 4 }]
         }
     ]
-  } 
+}

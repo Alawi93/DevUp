@@ -7,7 +7,7 @@ const developer    = require('./routes/developer');
 const member       = require('./routes/member');
 const path         = require("path");
 const middleware   = require('./middleware/middleware');  
-const session      = require('express-session')
+const session      = require('express-session');
 require('dotenv').config()
 
 
@@ -36,6 +36,5 @@ middleware.checkCreateDummyUser();
 middleware.checkAddAdmin();
 
 app.listen(port, ()=>{
-
-    console.log(`Server started on port: ${port}`)
+console.log(`Server started on port: ${port}`)
 });
