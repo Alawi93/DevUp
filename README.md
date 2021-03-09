@@ -6,7 +6,7 @@
 ---
 
 <br>
-<a href="https://devup.duckdns.org/" target="_blank">Check out </a> the deployed web app.
+[Check out ](https://devup.duckdns.org/) the deployed web app.
 
 ## Table of contents <!-- omit in toc -->
 
