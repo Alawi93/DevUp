@@ -323,6 +323,7 @@ const clientManager = {
         $("#main-wrapper").removeClass("not-logged-in");
         $("#main-wrapper").removeClass("developer");
         $("#main-wrapper").removeClass("admin");
+        // Adding: 'not-logged-in', 'developer' OR 'admin'.
         $("#main-wrapper").addClass(clientProfile);
     }
 };

@@ -188,6 +188,51 @@ app.use(session({
                 ```
 
 ## Frontend
+- **Single Page Architecture (SPA)**
+  - The web service only provides one generic HTML-document, acting as a general-purpose frame with dedicated **injection points** for dynamic content. Content requests are performed by calls to an API (using **AJAX with jQuery**). Client-side rendering of the HTML document is then performed.
+  - **Dedicated script for API-requests**. This creates a clean separation of concern between the view scope and the data communication scope.
+
+- **Responsive design**
+  - *Mobile-first design*.
+  - *CSS with static width thresholds for determing basic scaling*. This includes removing selected items from the view for smaller screens. As an example, the header will remove the Devup logo and the client's name on small screens.
+  - *JavaScript to calculate behaviours based on screen size*. For example: On big screens the sidebar will shrink the adjacent content area, possibly forcing items to be stacked on top of each other rather than side by side. However, on small screens, the sidebar instead overlaps the content area, as shrinking it would appear jittery. For this calculation, the script takes into account the width of the sidebar, and the minimum width required to display one item in the main content area. If both cannot fit side by side, the sidebar instead overlaps the content area.
+  ```javascript
+    onResize: function () {
+        bigScreen = $(window).width() > (minWidthContent + minWidthSidebar);
+        if (bigScreen) {
+            $("#main-wrapper").addClass("big-screen");
+            $("#main-wrapper").addClass("menu-displayed");
+        } else {
+            $("#main-wrapper").removeClass("big-screen");
+            $("#main-wrapper").removeClass("menu-displayed");
+        }
+    }
+  ```
+As illustrated by the code snippet above, the script also determines the sidebar defualt mode: For big screens, the sidebar is displayed by defualt. 
+
+- **Stateful CSS**
+  - The generic HTML template supports displays in three modes, based on the client state: ``not-logged-in``, ``developer`` and ``admin``. The display is always in one of these modes, making it a stateful approach. What's displayed for each mode is governed by CSS propertites being added or removed to a main wrapper. JavaScript is then used to dynamcially trigger a certian mode:
+  ```javascript
+  viewAdapt: function (clientProfile) {
+        // Adapt view to type of client
+        $("#main-wrapper").removeClass("not-logged-in");
+        $("#main-wrapper").removeClass("developer");
+        $("#main-wrapper").removeClass("admin");
+        // Adding: 'not-logged-in', 'developer' OR 'admin'.
+        $("#main-wrapper").addClass(clientProfile);
+    }
+  ``` 
+  The above takes place in the Javascript scope ``clientManager``, and is issued upon changes in the current client object ``clientManager.client``.
+
+- **Variable scope**
+  -  Global Javascript methods and variables are collision protected in object litterals of appropriate cathergories. For example, the object ``sidebar`` holds all the globally accessible variables and methods associated with the sidebar operations. Thus, invoking a sidebar operation could look like this:
+  ```javascript
+  sidebar.toggleDropDown("edit-profile");
+  ```
+  - Other global Javascript scopes are ``signIn`` (for register and login operations), ``clientManager`` (for the current client setup, initialized upon login or register), ``popup`` (for displaying short messages, like error messages fromt he server), ``demoMode`` (for indicating demo login) and ``api-request``. 
+- Separations of concern
+  - The templates and scripts have a clear seperation 
+
  - **Injectable components:**
  - **DOM manipulation:**
  - **Ajax:**
