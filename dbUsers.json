@@ -222,35 +222,13 @@
             "selfDescription": "Dedicated developer with a passion for home automations and data communicaitons.",
             "isBanned": false,
             "skillset": [
-                {
-                    "skillName": "Java",
-                    "skillRate": 8
-                },
-                {
-                    "skillName": "HTML",
-                    "skillRate": 4
-                },
-                {
-                    "skillName": "CSS",
-                    "skillRate": 3
-                },
-                {
-                    "skillName": "JavaScript",
-                    "skillRate": 3
-                },
-                {
-                    "skillName": "Python",
-                    "skillRate": 2
-                },
-                {
-                    "skillName": "MySql",
-                    "skillRate": 6
-                },
-                {
-                    "skillName": "PhP",
-                    "skillRate": 3
-                }
-            ]
+                {"skillName": "Java", "skillRate": 8 },
+                {"skillName": "HTML", "skillRate": 4 },
+                {"skillName": "CSS", "skillRate": 3 },
+                {"skillName": "JavaScript", "skillRate": 3 },
+                {"skillName": "Python", "skillRate": 2 },
+                {"skillName": "MySql", "skillRate": 6 },
+                {"skillName": "PhP", "skillRate": 3 }]
         },
         {
             "password": "1234",
@@ -265,35 +243,13 @@
             "selfDescription": "Passionated programmer with high problem-solving capabilities.",
             "isBanned": false,
             "skillset": [
-                {
-                    "skillName": "Java",
-                    "skillRate": 9
-                },
-                {
-                    "skillName": "HTML",
-                    "skillRate": 3
-                },
-                {
-                    "skillName": "CSS",
-                    "skillRate": 4
-                },
-                {
-                    "skillName": "JavaScript",
-                    "skillRate": 2
-                },
-                {
-                    "skillName": "Python",
-                    "skillRate": 3
-                },
-                {
-                    "skillName": "MySql",
-                    "skillRate": 5
-                },
-                {
-                    "skillName": "PhP",
-                    "skillRate": 4
-                }
-            ]
+                {"skillName": "Java", "skillRate": 9 },
+                {"skillName": "HTML", "skillRate": 3 },
+                {"skillName": "CSS", "skillRate": 4 },
+                {"skillName": "JavaScript", "skillRate": 2 },
+                {"skillName": "Python", "skillRate": 3 },
+                {"skillName": "MySql", "skillRate": 5 },
+                {"skillName": "PhP", "skillRate": 4 }]
         }
     ]
 }
