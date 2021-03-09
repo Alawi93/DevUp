@@ -219,7 +219,7 @@
             "country": "SWEDEN",
             "yearsExperience": 3,
             "pricePerHour": 300,
-            "selfDescription": "Dedicated developer with a passion for home automations and data communicaitons.",
+            "selfDescription": "Dedicated developer with a passion for home automations and data communications.",
             "isBanned": false,
             "skillset": [
                 {"skillName": "Java", "skillRate": 8 },

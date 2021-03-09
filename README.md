@@ -1,11 +1,13 @@
-# Devup
+# <img  src="/views/images/logo.svg" width="200">
 
 #### Technology Stack| `Languagues and Tools`
 ><img alt="NodeJS" src="https://img.shields.io/badge/node.js%20-%2343853D.svg?&style=for-the-badge&logo=node.js&logoColor=white"/> <img alt="JavaScript" src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img alt="HTML5" src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/> <img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/> <img alt="Express.js" src="https://img.shields.io/badge/express.js%20-%23404d59.svg?&style=for-the-badge"/> <img alt="jQuery" src="https://img.shields.io/badge/jquery%20-%230769AD.svg?&style=for-the-badge&logo=jquery&logoColor=white"/> <img alt="MongoDB" src ="https://img.shields.io/badge/MongoDB-%234ea94b.svg?&style=for-the-badge&logo=mongodb&logoColor=white"/> <img alt="GitHub" src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/> <img alt="Git" src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/> 
-
+>
 ---
+
 <br>
-<br>
+
+[Check out](https://devup.duckdns.org/) the deployed web app.
 
 ## Table of contents <!-- omit in toc -->
 
@@ -24,13 +26,16 @@
     - **MongoDB:**
    - **Middleware:**   
 - **[Frontend](#Frontend)**
+    - **SPA**
+    - **Responsive design**
+    - **Stateful CSS**
+    - **Variable scope**
 - **[File Structure](#File-Structure)**
 ---
 <br>
 
-
-## About DevUp
-> DevUps allows software developers to easily market themselves for job or gig opportunities.
+## About DevUp 
+DevUps allows software developers to easily market themselves for job or gig opportunities.
 
 *Features:*
 - Browse developers
@@ -51,7 +56,7 @@
  - **Error management** using appropriate HTTP status codes, served by backend and handled by frontend.
 ## Security
  - **Session | `Session managament`:** Since HTTP is stateless (no session information is retained by the receiver), there is no way to associate a request to any other request and thus we need a way to identify the current user accessing our system. In devUp this helps us keep track of what users are logged in and have the privilege to access server information.
- - **Hosting:**
+ - **Hosting:** The web app is deployed on a VPS using NGINX as reverse proxy server. Certbot is used to force HTTPS on the communication channel (with Let's Encrypt TLS certificates). The Node app itself is managed with PM2.
  - **Data storage:**
 - **Enviromental variable:** We use load enviromental variables from `.env` file into `process.env` and include it for storing the connection address to the database and for the secret used in sessions. It helps us hide configurations that we would not like to include with our github pushes since this information is not to be showed. See the following for an example of declaring these variables in .env file and how its used in the server (`app,js`).
 ```
@@ -201,7 +206,7 @@ app.use(session({
  
 
 - **Stateful CSS**
-  - The generic HTML template supports displays in three modes, based on the client state: ``not-logged-in``, ``developer`` and ``admin``. The display is always in one of these modes, making it a stateful approach. What's displayed for each mode is governed by CSS propertites being added or removed to a main wrapper. JavaScript is then used to dynamcially trigger a certian mode<br>
+  - The generic HTML template supports displays in three modes, based on the client state: ``not-logged-in``, ``developer`` and ``admin``. The display is always in one of these modes, making it a stateful approach. What's displayed for each mode is governed by CSS propertites being added or removed to a main wrapper. JavaScript is then used to dynamcially trigger a certian mode.<br>
   The below takes place in the Javascript scope ``clientManager``, and is issued upon changes in the current client object ``clientManager.client``.
     ```javascript
      viewAdapt: function (clientProfile) {
