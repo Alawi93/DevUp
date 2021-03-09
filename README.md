@@ -5,6 +5,7 @@
 
 ---
 ![icon](/views/images/logo.svg =100x)
+<img  src="/views/images/logo.svg" width="200">
 <img  src="/views/images/logo.svg" style="height:100px;">
 <br>
 
