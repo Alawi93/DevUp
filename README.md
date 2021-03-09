@@ -23,11 +23,13 @@
     - **MongoDB:**
    - **Middleware:**   
 - **[Frontend](#Frontend)**
+    - **SPA**
+    - **Responsive design**
+    - **Stateful CSS**
+    - **Variable scope**
 - **[File Structure](#File-Structure)**
 ---
 <br>
-
-![icon](/views/images/devup-icon-larger.png)
 
 ## About DevUp 
 DevUps allows software developers to easily market themselves for job or gig opportunities.
