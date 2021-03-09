@@ -30,7 +30,7 @@
 
 
 ## About DevUp
-> DevUps allows software developers to easily market themselves for job or gig opportunities.
+DevUps allows software developers to easily market themselves for job or gig opportunities.
 
 *Features:*
 - Browse developers
