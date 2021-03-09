@@ -31,8 +31,6 @@
 ## About DevUp 
 DevUps allows software developers to easily market themselves for job or gig opportunities.
 
-![icon](/views/images/devup-icon-larger.png)
-
 *Features:*
 - Browse developers
   - No account or login required.
@@ -44,6 +42,8 @@ DevUps allows software developers to easily market themselves for job or gig opp
 - DevUp admin
   - Same login field as developers.
   - Privileged to ban, delete and add developers.
+
+![icon](/views/images/devup-icon-larger.png)
 
 ## Architectural Approach
  - **Single Page Architecture (SPA):** The browser experience centres around one generic HTML document being loaded at session start, and updated at client side as new content is requested. By not reloading the entire page when content is requested, the amounts of data being transferred is heavily reduced. This provides fast and light network operations. Also, by delegating the DOM-manipulations and thus the HTML rendering to client side, the server is relieved.
