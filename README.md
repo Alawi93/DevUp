@@ -13,7 +13,7 @@
 
 - **[About DevUp](#About-DevUp)**
 - **[Architectural Approach](#Architectural-Approach)**
-    - **Single Page Architecture (SPA)**
+    - **Single Page Application (SPA)**
     - **Restful API**
     - **Model View Controller (MVC)**
 - **[Security](#Security)**
@@ -194,7 +194,7 @@ app.use(session({
 
 ## Frontend
 > *HTML, CSS, Javascript, AJAX, jQuery*
-- **Single Page Architecture (SPA)**
+- **Single Page Application (SPA)**
 
   - The single HTML-document acts as a general-purpose frame with multiple dedicated **injection points** for dynamic content. It thus includes all compontents and scripts neccessary to perform client-side DOM rendering and asynchronous API-requests for adapting the view. Content requests are performed using **AJAX with jQuery**. Client-side rendering of the HTML document is then performed by processing the JSON response from the server.
 
