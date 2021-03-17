@@ -21,10 +21,10 @@
     - **Hosting**
     - **Data storage**
 - **[Backend](#Backend)**
-    - **Server:**
-    - **Routes:**
-    - **MongoDB:**
-   - **Middleware:**   
+    - **Server**
+    - **Routes**
+    - **MongoDB**
+   - **Middleware**   
 - **[Frontend](#Frontend)**
     - **SPA**
     - **Responsive design**
@@ -205,7 +205,7 @@ app.use(session({
   The same script also determines the sidebar defualt mode: For big screens, the sidebar is displayed by defualt.
  
 
-- **Stateful CSS**
+- **Stateful view**
   - The generic HTML template supports displays in three modes, based on the client state: ``not-logged-in``, ``developer`` and ``admin``. The display is always in one of these modes, making it a stateful approach. What's displayed for each mode is governed by CSS propertites being added or removed to a main wrapper. JavaScript is then used to dynamcially trigger a certian mode.<br>
   The below takes place in the Javascript scope ``clientManager``, and is issued upon changes in the current client object ``clientManager.client``.
     ```javascript
