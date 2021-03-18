@@ -1,5 +1,5 @@
 const apiRequest = {
-    getDevelopers: function (filterccc) {
+    getDevelopers: function () {
         const filter = sidebar.searchFilter;
         console.log(filter);
         $.ajax({
@@ -134,7 +134,7 @@ const apiRequest = {
             contentType: "application/json",
             data: JSON.stringify({ ban, email }),
             success: function () {
-                apiRequest.getDevelopers(sidebar.searchFilter);
+                apiRequest.getDevelopers();
             },
             error: function (response) {
                 handleError(response);
@@ -161,7 +161,6 @@ const apiRequest = {
 function handleError(error) {
     /*For an error message with a non-200 HTTP status code, the content will not be parsed by jQuery.
     = Need a more manual approach to parsing the HTTP body content of non 200-replies into JSON.*/
-    console.log(error);
     // UPDATE + Call popup
     if (error.responseJSON.message.body) {
         popup.display("Error", [error.responseJSON.message.body]);

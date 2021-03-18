@@ -203,7 +203,7 @@ const sidebar = {
         for(skill of this.availableSkills) {
             skillSection.insertAdjacentHTML("beforeend", 
             `<label class="checkbox-container">${skill}
-            <input type="checkbox" id="${skill}" onclick="sidebar.checkboxUpdate(this);">
+            <input type="checkbox" class="${skill}" onclick="sidebar.checkboxUpdate(this);">
             <span class="checkmark"></span>
             </label><br>`);
         };
@@ -226,12 +226,12 @@ const sidebar = {
         this.searchFilter.skills = []; // Clear skill list
         $searchSection.find("input[type=checkbox]").each(function() {
             if(this.checked) {
-                const skill = this.id;
+                const skill = this.className;
                 sidebar.searchFilter.skills.push(skill);
             };
         });
         // API request, passing the updated search filter object
-        apiRequest.getDevelopers(this.searchFilter);
+        apiRequest.getDevelopers();
         this.onResize();
     },
     adminAddDevloper: function() {

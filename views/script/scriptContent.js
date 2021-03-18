@@ -153,8 +153,8 @@ function refreshContent(users) {
                         <div class="cardHeader"><div class="adminContent">' + deleteBtn + banBtn + '</div>' +
                     '<h1 class="title">' + user.name + '</h1>\
                         <h2>' + user.professionLabel + '</h2>\
-                        <div class="linksContainer"><a href="' + user.github + '"><i class="fab fa-github-square linkIcon"></i></a>\
-                        <a href="' + user.linkedin + '"><i class="fab fa-linkedin linkIcon"></i></a>\
+                        <div class="linksContainer"><a href="' + user.github + '" target="_blank"><i class="fab fa-github-square linkIcon"></i></a>\
+                        <a href="' + user.linkedin + '" target="_blank"><i class="fab fa-linkedin linkIcon"></i></a>\
                         </div>\
                         </div>\
                         <div class="cardBody">\
