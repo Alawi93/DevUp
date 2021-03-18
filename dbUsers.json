@@ -250,6 +250,27 @@
                 {"skillName": "Python", "skillRate": 3 },
                 {"skillName": "MySql", "skillRate": 5 },
                 {"skillName": "PhP", "skillRate": 4 }]
+        },
+        {
+            "password": "1234",
+            "isAdmin": false,
+            "email": "Ali@gmail.com",
+            "name": "Ali Muhammed",
+            "professionLabel": "Fullstack developer",
+            "age": 28,
+            "country": "SWEDEN",
+            "yearsExperience": 2,
+            "pricePerHour": 310,
+            "selfDescription": "Passionate developer with an interest in fullstack web development solutions.",
+            "isBanned": false,
+            "skillset": [
+                {"skillName": "Java", "skillRate": 8 },
+                {"skillName": "HTML", "skillRate": 8 },
+                {"skillName": "CSS", "skillRate": 4 },
+                {"skillName": "JavaScript", "skillRate": 8 },
+                {"skillName": "MongoDB", "skillRate": 8 },
+                {"skillName": "MySql", "skillRate": 6 },
+                {"skillName": "PhP", "skillRate": 3 }]
         }
     ]
 }

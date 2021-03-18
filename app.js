@@ -24,12 +24,6 @@ app.use(session({secret: process.env.SECRETS,resave:false,saveUninitialized: tru
 app.use("/api/developers",developer);
 app.use("/api/member",member);
 app.use(middleware.incomingRequest);
-//root route
-app.get("/",function(req,res){
-//res.sendFile()
-});
-
-
 
 middleware.checkSkillSets();
 middleware.checkCreateDummyUser();
