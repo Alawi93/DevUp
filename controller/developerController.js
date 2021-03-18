@@ -12,7 +12,7 @@
      }
  
      adminFilter ={...isBanned,...skillFilter};
-     console.log(adminFilter);
+     //console.log(adminFilter);
      return adminFilter;
  }
  

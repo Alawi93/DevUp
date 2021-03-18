@@ -55,6 +55,7 @@ const apiRequest = {
                 } else {
                     // Make logged in directly
                     clientManager.loginSuccessful(response.user);
+                    popup.display("Welcome!", ["Your account has been created.", "Start by editing your profile."]);
                 }
                 // Refresh body content
                 apiRequest.getDevelopers();
@@ -101,6 +102,7 @@ const apiRequest = {
             dataType: "json",
             success: function () {
                 clientManager.logoutSuccessful();
+                popup.display("Logged out", ["You may continue to browse developers."]);
             },
             error: function (response) {
                 handleError(response);
@@ -120,6 +122,7 @@ const apiRequest = {
                 clientManager.setClient(response.dbUserData);
                 // Refresh body content
                 apiRequest.getDevelopers();
+                popup.display("Success!", ["Profile updated."]);
             },
             error: function (response) {
                 handleError(response);
@@ -135,6 +138,7 @@ const apiRequest = {
             data: JSON.stringify({ ban, email }),
             success: function () {
                 apiRequest.getDevelopers();
+                popup.display("User " + (ban? "banned" : "unbanned"), [email]);
             },
             error: function (response) {
                 handleError(response);
@@ -150,6 +154,7 @@ const apiRequest = {
             data: JSON.stringify({ email }),
             success: function () {
                 apiRequest.getDevelopers();
+                popup.display("User deleted", [email]);
             },
             error: function (response) {
                 handleError(response);
