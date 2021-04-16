@@ -7,9 +7,9 @@
 
 <br>
 
-[Check out](https://devup.duckdns.org/) the deployed web app.
-
 <img src="/views/images/print_screen_2.png" width="800">
+
+[Check out](https://devup.duckdns.org/) the deployed web app.
 
 ## Table of contents <!-- omit in toc -->
 
