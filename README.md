@@ -9,6 +9,8 @@
 
 [Check out](https://devup.duckdns.org/) the deployed web app.
 
+<img src="/views/images/print_screen.png" alt="Print screen">
+
 ## Table of contents <!-- omit in toc -->
 
 - **[About DevUp](#About-DevUp)**
