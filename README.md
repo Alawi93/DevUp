@@ -9,7 +9,7 @@
 
 [Check out](https://devup.duckdns.org/) the deployed web app.
 
-<img src="/views/images/print_screen.png" alt="Print screen" max-width="400px" border-radius="12px">
+<img src="/views/images/print_screen.png" alt="Print screen" max-width="400" border-radius="12">
 
 ## Table of contents <!-- omit in toc -->
 
